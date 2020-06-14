@@ -2,6 +2,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { LocacionComponent } from '../locacion/locacion.component';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
+import { BusquedaComponent } from '../ruta/busqueda.component';
 
 /** @title Responsive sidenav */
 @Component({
@@ -9,10 +10,12 @@ import { NotificacionComponent } from '../notificacion/notificacion.component';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css'],
 })
+
 export class SidenavResponsiveExample implements OnDestroy {
   mobileQuery: MediaQueryList;
 
   menuItems = [
+    { path: '', component: BusquedaComponent, label: 'Buscar Ruta' },
     { path: 'app-locacion', component: LocacionComponent, label: 'Iniciar Sesion' },
     { path: 'app-notificacion', component: NotificacionComponent, label: 'Registrarse' }
   ];
