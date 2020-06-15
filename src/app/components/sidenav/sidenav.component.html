@@ -3,7 +3,10 @@
         <button mat-icon-button (click)="snav.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
-        <a routerLink="." class="example-app-name" style="text-decoration: none; color: #FFFFFF;">PasoAPaso</a>
+        <button mat-mini-fab color="accent" routerLink=".">
+            <mat-icon>home</mat-icon>
+        </button>
+        <!--<a routerLink="." class="example-app-name" style="text-decoration: none; color: #FFFFFF;">PasoAPaso</a>-->
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"

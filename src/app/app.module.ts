@@ -65,6 +65,7 @@ import { LocacionComponent } from './components/locacion/locacion.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { BusquedaComponent } from './components/ruta/busqueda.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { BusquedanvComponent } from './components/ruta/busquedanv/busquedanv.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     LocacionComponent,
     NotificacionComponent,
     BusquedaComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BusquedanvComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">Buscar Ruta</span>
+</mat-toolbar>
+
+<div class="container">
+  <mat-grid-list cols="1" rowHeight="2:1">
+    <mat-grid-tile cols="1" rowHeight="2:1" *ngFor="let tile of tiles" [style.background]="tile.color">
+      <button mat-button>{{tile.text}}</button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<button id="test" mat-button>asdasd</button>

@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { LocacionComponent } from '../locacion/locacion.component';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { BusquedaComponent } from '../ruta/busqueda.component';
+import { BusquedanvComponent } from '../ruta/busquedanv/busquedanv.component';
 
 /** @title Responsive sidenav */
 @Component({
@@ -17,7 +18,8 @@ export class SidenavResponsiveExample implements OnDestroy {
   menuItems = [
     { path: '', component: BusquedaComponent, label: 'Buscar Ruta' },
     { path: 'app-locacion', component: LocacionComponent, label: 'Iniciar Sesion' },
-    { path: 'app-notificacion', component: NotificacionComponent, label: 'Registrarse' }
+    { path: 'app-notificacion', component: NotificacionComponent, label: 'Registrarse' },
+    { path: 'app-busquedanv', component: BusquedanvComponent, label: 'Buscar Ruta No Vidente' },
   ];
 
   private _mobileQueryListener: () => void;
