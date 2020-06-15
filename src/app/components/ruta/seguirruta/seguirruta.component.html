@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">Seguir Ruta</span>
+</mat-toolbar>
+
+<div class="container">
+    <mat-grid-list cols="1" rowHeight="2:1" *ngIf="!opcionNoValida">
+        <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightblue'">
+            <button mat-button (click)="siguienteOpcion()" [disabled]="opcionNoValida">INICIAR RUTA/SIGUIENTE</button>
+        </mat-grid-tile>
+        <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightgreen'">
+            <button mat-button>ME PERDI</button>
+        </mat-grid-tile>
+        <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightpink'">
+            <button mat-button>ABANDONAR RUTA</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="1" rowHeight="1.5:1" *ngIf="opcionNoValida">
+        <mat-grid-tile cols="1" rowHeight="1.5:1" [style.background]="'lightblue'">
+            <button mat-button>AGREGAR FAVORITOS</button>
+        </mat-grid-tile>
+        <mat-grid-tile cols="1" rowHeight="1.5:1" [style.background]="'lightgreen'">
+            <button mat-button routerLink="/">BUSCAR NUEVA RUTA</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

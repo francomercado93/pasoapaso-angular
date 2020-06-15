@@ -66,6 +66,7 @@ import { NotificacionComponent } from './components/notificacion/notificacion.co
 import { BusquedaComponent } from './components/ruta/busqueda.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { BusquedanvComponent } from './components/ruta/busquedanv/busquedanv.component';
+import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { BusquedanvComponent } from './components/ruta/busquedanv/busquedanv.com
     NotificacionComponent,
     BusquedaComponent,
     NotFoundComponent,
-    BusquedanvComponent
+    BusquedanvComponent,
+    SeguirrutaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Speech from 'speak-tts';
+import { Router } from '@angular/router';
 
 export interface Ruta {
   id: number;
@@ -58,6 +59,8 @@ export class BusquedanvComponent implements OnInit {
     { id: 5, nombre: 'Radiología', idLocacion: 1 },
     { id: 6, nombre: 'Consultorio 4', idLocacion: 2 }
   ];
+
+  constructor(private route: Router) { }
 
   ngOnInit() {
     this.combinacion = [this.categorias, this.locaciones, this.rutas];
@@ -118,8 +121,12 @@ export class BusquedanvComponent implements OnInit {
     }
     console.log("Confirmado " + this.combinacion[this.j][this.i].nombre)
     this.leerInstruccion("Confirmado " + this.combinacion[this.j][this.i].nombre)
+    let id = this.combinacion[this.j][this.i].id;
     this.j++
     this.i = -1
+    if (this.j == 3) {
+      this.route.navigate(['/ruta', id]);
+    }
   }
 
   getRutasLocacion(idLocacion: number): any {
@@ -128,10 +135,6 @@ export class BusquedanvComponent implements OnInit {
 
   getLocacionesByCategoria(idCategoria: number): any {
     return this.locaciones.filter(locacion => locacion.idTipoInstitucion == idCategoria)
-  }
-
-  confirmar() {
-    this.ok = true
   }
 
   get opcionNoValida(): Boolean {
@@ -143,7 +146,7 @@ export class BusquedanvComponent implements OnInit {
       .init({
         volume: 0.5,
         lang: "es-ES",
-        rate: 0.88,
+        rate: 0.9,
         'voice': 'Google español',
         'splitSentences': false
       })
@@ -153,7 +156,6 @@ export class BusquedanvComponent implements OnInit {
       .catch(e => {
         console.error("El siguiente error se produjo al inicializarse: ", e);
       });
-
   }
 
   leerInstruccion(instruccion: string) {
@@ -163,13 +165,7 @@ export class BusquedanvComponent implements OnInit {
         queue: true,
         listeners: {
           onstart: () => {
-            console.log("Comienza el habla");
-          },
-          onend: () => {
-            console.log("Termina el habla");
-          },
-          onresume: () => {
-            console.log("Resume el habla");
+            console.log("Instrucción: " + instruccion);
           },
           onboundary: event => {
             console.log(
@@ -188,9 +184,4 @@ export class BusquedanvComponent implements OnInit {
         console.error("Ocurrio un error: ", e);
       });
   }
-}
-
-function delay(ms: number) {
-  console.log("delay")
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
