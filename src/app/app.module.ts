@@ -65,7 +65,7 @@ import { LocacionComponent } from './components/locacion/locacion.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { BusquedaComponent } from './components/ruta/busqueda.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { BusquedanvComponent } from './components/ruta/busquedanv/busquedanv.component';
+import { BusquedaNvComponent } from './components/ruta/busquedanv/busquedanv.component';
 import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 
 @NgModule({
@@ -76,7 +76,7 @@ import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.com
     NotificacionComponent,
     BusquedaComponent,
     NotFoundComponent,
-    BusquedanvComponent,
+    BusquedaNvComponent,
     SeguirrutaComponent
   ],
   imports: [

@@ -1,99 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import Speech from 'speak-tts';
+import Speech from "speak-tts";
+import { StubLocacionService } from 'src/app/services/locacion.service';
+import { StubRutaService } from 'src/app/services/ruta.service';
+import { Categoria } from 'src/app/domain/categoria';
+import { Locacion } from 'src/app/domain/locacion';
+import { Ruta } from 'src/app/domain/ruta';
 import { Router } from '@angular/router';
-
-export interface Ruta {
-  id: number;
-  nombre: string;
-  idLocacion: number
-}
-
-export interface Locacion {
-  id: number;
-  nombre: string;
-  idTipoInstitucion: number
-}
-
-export interface Categoria {
-  id: number;
-  nombre: string;
-}
 
 @Component({
   selector: 'app-busquedanv',
   templateUrl: './busquedanv.component.html',
   styleUrls: ['./busquedanv.component.css']
 })
-export class BusquedanvComponent implements OnInit {
+export class BusquedaNvComponent implements OnInit {
 
-  siguiente: Boolean = false
-  categoriaSeleccionada: Categoria
-  ok: Boolean = false
   speech: Speech = new Speech()
-  i: number = -1
+  i: number = 0
   j: number = 0
-  k: number = -1
+  categoriaSeleccionada: Categoria
   locacionSeleccionada: Locacion
   rutaSeleccionada: Ruta
-
   combinacion: any
+  categorias: Categoria[] = new Array
+  locaciones: Locacion[] = new Array
+  rutas: Ruta[] = new Array
 
-  categorias: Categoria[] = [
-    { id: 0, nombre: 'Por favor seleccione el tipo de locación' },
-    { id: 1, nombre: 'Favoritos' },
-    { id: 2, nombre: 'Hospitales' },
-    { id: 3, nombre: 'Universidades' },
-    { id: 4, nombre: 'Museos' }
-  ]
+  constructor(private locacionService: StubLocacionService, private rutaService: StubRutaService, private route: Router) { }
 
-  locaciones: Locacion[] = [
-    { id: 0, nombre: 'Por favor seleccione la locación', idTipoInstitucion: 0 },
-    { id: 1, nombre: 'Hospital Pirovano', idTipoInstitucion: 2 },
-    { id: 2, nombre: 'Hospital Thompson', idTipoInstitucion: 2 },
-    { id: 3, nombre: 'Hospital Tornu', idTipoInstitucion: 2 }
-  ];
-  //Rutas
-  rutas: Ruta[] = [
-    { id: 0, nombre: 'Seleccione la ruta', idLocacion: 0 },
-    { id: 4, nombre: 'Mesa de Ayuda', idLocacion: 1 },
-    { id: 5, nombre: 'Radiología', idLocacion: 1 },
-    { id: 6, nombre: 'Consultorio 4', idLocacion: 2 }
-  ];
-
-  constructor(private route: Router) { }
-
-  ngOnInit() {
-    this.combinacion = [this.categorias, this.locaciones, this.rutas];
-    this.inicializarVoz();
+  async ngOnInit() {
+    this.categorias = await this.locacionService.getCategorias()
+    this.inicializarVoz()
+    await delay(3000)
+    this.leerInstruccion("Seleccione una categoría")
+    await delay(2000)
+    this.leerInstruccion(this.categorias[this.i].nombre)
   }
 
   siguienteOpcion() {
     this.i++
     switch (this.j) {
       case 0:
-        if (this.i < this.categorias.length) {
-          this.leerInstruccion(this.combinacion[this.j][this.i].nombre)
+        if (this.i >= this.categorias.length) {
+          this.i--
         }
-        else {
-          this.i = 0
-        }
+        console.log("i " + this.i)
+        this.leerInstruccion(this.categorias[this.i].nombre)
         break
       case 1:
-        if (this.i < this.locaciones.length) {
-          this.leerInstruccion(this.combinacion[this.j][this.i].nombre)
+        if (this.i >= this.locaciones.length) {
+          this.i--
         }
-        else {
-          this.i = 0
-        }
+        this.leerInstruccion(this.locaciones[this.i].nombre)
         break
       case 2:
-        console.log(this.rutas.length)
-        if (this.i < this.rutas.length) {
-          this.leerInstruccion(this.combinacion[this.j][this.i].nombre)
+        if (this.i >= this.rutas.length) {
+          this.i--
         }
-        else {
-          this.i = 0
-        }
+        this.leerInstruccion(this.rutas[this.i].nombre)
+        break
+      default:
+        this.leerInstruccion("Opcion no valida")
         break
     }
   }
@@ -103,42 +69,83 @@ export class BusquedanvComponent implements OnInit {
     if (this.i < 0) {
       this.i = 0
     }
-    this.leerInstruccion(this.combinacion[this.j][this.i].nombre)
-  }
-
-  confirmarOpcion() {
     switch (this.j) {
       case 0:
-        this.categoriaSeleccionada = this.combinacion[this.j][this.i]
+        this.leerInstruccion(this.categorias[this.i].nombre)
         break
       case 1:
-        this.locacionSeleccionada = this.combinacion[this.j][this.i]
+        this.leerInstruccion(this.locaciones[this.i].nombre)
         break
       case 2:
-        this.rutaSeleccionada = this.combinacion[this.j][this.i]
-        console.log("Redireccion a Seguir ruta")
+        this.leerInstruccion(this.rutas[this.i].nombre)
+        break
+      default:
+        this.leerInstruccion("Opcion no valida")
         break
     }
-    console.log("Confirmado " + this.combinacion[this.j][this.i].nombre)
-    this.leerInstruccion("Confirmado " + this.combinacion[this.j][this.i].nombre)
-    let id = this.combinacion[this.j][this.i].id;
-    this.j++
-    this.i = -1
-    if (this.j == 3) {
-      this.route.navigate(['/ruta', id]);
+  }
+
+  async confirmarOpcion() {
+    switch (this.j) {
+      case 0:
+        this.categoriaSeleccionada = this.categorias[this.i]
+        this.locaciones = await this.locacionService.getLocacionesCategoria(this.categoriaSeleccionada.id)
+        if (this.locaciones == null || this.locaciones.length == 0) {
+          this.leerInstruccion("La categoría seleccionada no tiene locaciones cargadas")
+          await delay(2000)
+          this.leerInstruccion("Seleccione una locación")
+          await delay(2000)
+          this.leerInstruccion(this.categorias[this.i].nombre)
+          this.categoriaSeleccionada = null
+          this.j = 0
+        } else {
+          console.log("Confirmado " + this.categoriaSeleccionada.nombre)
+          this.leerInstruccion("Confirmado " + this.categoriaSeleccionada.nombre)
+          this.j++
+          this.i = 0
+          await delay(2000)
+          this.leerInstruccion("Seleccione una locación")
+          this.leerInstruccion(this.locaciones[this.i].nombre)
+        }
+        break
+      case 1:
+        this.locacionSeleccionada = this.locaciones[this.i]
+        this.rutas = await this.rutaService.getRutasLocacion(this.locacionSeleccionada.id)
+        if (this.rutas == null || this.rutas.length == 0) {
+          this.leerInstruccion("La locación seleccionada no tiene rutas cargadas")
+          await delay(2000)
+          this.leerInstruccion("Seleccione una locación")
+          this.locacionSeleccionada = null
+          await delay(2000)
+          this.leerInstruccion(this.locaciones[this.i].nombre)
+          this.j = 1
+        } else {
+          console.log("Cantidad de rutas " + this.locacionSeleccionada.nombre + " " + this.rutas.length)
+          console.log("Confirmado " + this.locacionSeleccionada.nombre)
+          this.leerInstruccion("Confirmado " + this.locacionSeleccionada.nombre)
+          await delay(2000)
+          this.leerInstruccion("Seleccione una ruta")
+          await delay(2000)
+          this.leerInstruccion(this.rutas[this.i].nombre)
+          this.j++
+          this.i = 0
+        }
+        break
+      case 2:
+        this.rutaSeleccionada = this.rutas[this.i]
+        console.log("Confirmado " + this.rutaSeleccionada.nombre)
+        this.leerInstruccion("Confirmado " + this.rutaSeleccionada.nombre)
+        this.j++
+        this.i = 0
+        console.log("Redireccion a Seguir ruta")
+        let id = this.rutaSeleccionada.id
+        this.route.navigate(['/ruta', id]);
+        break
     }
-  }
-
-  getRutasLocacion(idLocacion: number): any {
-    return this.rutas.filter(ruta => ruta.idLocacion == idLocacion)
-  }
-
-  getLocacionesByCategoria(idCategoria: number): any {
-    return this.locaciones.filter(locacion => locacion.idTipoInstitucion == idCategoria)
   }
 
   get opcionNoValida(): Boolean {
-    return this.i <= 0
+    return this.i < 0
   }
 
   inicializarVoz() {
@@ -146,7 +153,7 @@ export class BusquedanvComponent implements OnInit {
       .init({
         volume: 0.5,
         lang: "es-ES",
-        rate: 0.9,
+        rate: 0.88,
         'voice': 'Google español',
         'splitSentences': false
       })
@@ -156,6 +163,7 @@ export class BusquedanvComponent implements OnInit {
       .catch(e => {
         console.error("El siguiente error se produjo al inicializarse: ", e);
       });
+
   }
 
   leerInstruccion(instruccion: string) {
@@ -165,7 +173,7 @@ export class BusquedanvComponent implements OnInit {
         queue: true,
         listeners: {
           onstart: () => {
-            console.log("Instrucción: " + instruccion);
+            console.log("Instruccion: " + instruccion);
           },
           onboundary: event => {
             console.log(
@@ -184,4 +192,9 @@ export class BusquedanvComponent implements OnInit {
         console.error("Ocurrio un error: ", e);
       });
   }
+}
+
+function delay(ms: number) {
+  console.log("delay")
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

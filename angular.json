@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "pasoapaso-app"
+  "defaultProject": "pasoapaso-app",
+  "cli": {
+    "analytics": false
+  }
 }

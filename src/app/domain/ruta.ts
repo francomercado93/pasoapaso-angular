@@ -1,16 +1,5 @@
 export class Ruta {
-    /*
-    id: number
-    esPublica: boolean
-    idLocacion: number
-    nombre: string
-    idUsuario: number
-    fechaCreacion: Date
-    descripcion: string
-    idEstado: number
-    */
-
-    constructor(id: number, esPublica: boolean, idLocacion: number,
-        nombre: string, idUsuario: number, fechaCreacion: Date, descripcion: string, idEstado: number) {
+    constructor(public id: number, public esPublica: boolean, public idLocacion: number,
+        public nombre: string, public usuario: string, public fechaCreacion: Date, public descripcion: string, public idEstado: number) {
     }
 }

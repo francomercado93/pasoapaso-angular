@@ -4,13 +4,13 @@ import { LocacionComponent } from './components/locacion/locacion.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { BusquedaComponent } from './components/ruta/busqueda.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { BusquedanvComponent } from './components/ruta/busquedanv/busquedanv.component';
 import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
+import { BusquedaNvComponent } from './components/ruta/busquedanv/busquedanv.component';
 
 
 const routes: Routes = [
   { path: '', component: BusquedaComponent },
-  { path: 'app-busquedanv', component: BusquedanvComponent },
+  { path: 'app-busquedanv', component: BusquedaNvComponent },
   { path: 'app-locacion', component: LocacionComponent },
   { path: 'app-notificacion', component: NotificacionComponent },
   { path: 'ruta/:id', component: SeguirrutaComponent },

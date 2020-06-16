@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Speech from 'speak-tts';
-
-export interface Instruccion {
-  id: number;
-  instruccion: string;
-}
-
-export interface Ruta {
-  id: number;
-  nombre: string;
-  idLocacion: number;
-  instrucciones: Instruccion[];
-}
+import { StubRutaService } from 'src/app/services/ruta.service';
+import { Ruta } from '../busqueda.component';
+import { Instruccion } from 'src/app/domain/instruccion';
 
 @Component({
   selector: 'ruta',
@@ -25,26 +16,26 @@ export class SeguirrutaComponent implements OnInit {
   speech: Speech = new Speech()
   i: number = 0
 
-  instruccion = { id: 0, instruccion: "Iniciando instrucciones" };
-  instruccion2 = { id: 1, instruccion: "en bicho bicho yo me convertí" };
-  instruccion3 = { id: 2, instruccion: "cocodrilo soy" };
-  instrucciones: Instruccion[] = [this.instruccion, this.instruccion2, this.instruccion3];
-  //Ruta
-  ruta: Ruta = { id: 0, nombre: 'Seleccione la ruta', idLocacion: 0, instrucciones: this.instrucciones }
+  // instruccion = { id: 0, instruccion: "Iniciando instrucciones" };
+  // instruccion2 = { id: 1, instruccion: "en bicho bicho yo me convertí" };
+  // instruccion3 = { id: 2, instruccion: "cocodrilo soy" };
+  // instrucciones: Instruccion[] = [this.instruccion, this.instruccion2, this.instruccion3];
+  // //Ruta
+  // ruta: Ruta = { id: 0, nombre: 'Seleccione la ruta', idLocacion: 0, instrucciones: this.instrucciones }
+  ruta: Ruta
+  instrucciones: Instruccion[]
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private rutaService: StubRutaService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.route.paramMap.subscribe(params => {
       console.log(params);
     });
     const id = +this.route.snapshot.paramMap.get('id');
-    this.getRuta(id);
+    // this.getRuta(id);
+    // this.ruta = await this.rutaService.getRutaById(id)
+    this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
     this.inicializarVoz();
-  }
-
-  getRuta(id: number) {
-    return this.ruta;
   }
 
   inicializarVoz() {
@@ -92,11 +83,27 @@ export class SeguirrutaComponent implements OnInit {
   }
 
   siguienteOpcion() {
-    this.leerInstruccion(this.ruta.instrucciones[this.i].instruccion);
+    var instruccion = this.instrucciones[this.i].tipoInstruccion
+    const cantidad = this.instrucciones[this.i].cantidad
+    if (instruccion.includes("Caminar")) {
+      instruccion = instruccion + " " + cantidad + " pasos"
+    }
+    if (instruccion.includes("escalones")) {
+      var aux = instruccion.split(" ")
+      instruccion = aux[0] + " " + cantidad + aux[1]
+    }
+    if (instruccion.includes("ascensor")) {
+      var aux = instruccion.split(" ")
+      instruccion = aux[0] + " " + cantidad + aux[1]
+    }
+    this.leerInstruccion(instruccion);
     this.i++;
+    if (this.i >= this.instrucciones.length) {
+      this.leerInstruccion("A llegado a su destino")
+    }
   }
 
   get opcionNoValida(): Boolean {
-    return this.i >= this.ruta.instrucciones.length;
+    return this.i >= this.instrucciones.length;
   }
 }
