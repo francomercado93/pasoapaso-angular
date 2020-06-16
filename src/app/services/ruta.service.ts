@@ -69,10 +69,10 @@ export class StubRutaService implements IRutaService {
 
 
   bibliotecaUnsam: Ruta
-  deptoAlumnosTornaviasUnsam: Ruta
   aularioUnsam: Ruta
-  laboratorioSocialesUnsam: Ruta
-  salaRXPirovano: Ruta
+  deptoAlumnosTornaviasUnsam: Ruta //2
+  laboratorioSocialesUnsam: Ruta //4
+  salaRXPirovano: Ruta //5
   mesaAyudaThompson: Ruta
   radiologiaThompson: Ruta
   consultorio4Tornu: Ruta
@@ -90,29 +90,29 @@ export class StubRutaService implements IRutaService {
     this.rutas.push(this.aularioUnsam)
     this.rutas.push(this.laboratorioSocialesUnsam)
     this.rutas.push(this.salaRXPirovano)
-    this.deptoAlumnosTornaviasUnsam1 = new Instruccion(1, 1, "Caminar", 20)
-    this.deptoAlumnosTornaviasUnsam2 = new Instruccion(2, 1, "Girar a la izquierda", 0)
-    this.deptoAlumnosTornaviasUnsam3 = new Instruccion(4, 1, "Girar a la derecha", 0)
-    this.deptoAlumnosTornaviasUnsam4 = new Instruccion(5, 1, "Caminar", 20)
-    this.deptoAlumnosTornaviasUnsam5 = new Instruccion(6, 1, "Subir escalones", 20)
-    this.deptoAlumnosTornaviasUnsam6 = new Instruccion(7, 1, "Caminar", 35)
-    this.laboratorioSociales1 = new Instruccion(8, 2, "Caminar", 20)
-    this.laboratorioSociales2 = new Instruccion(9, 2, "Girar a la derecha", 0)
-    this.laboratorioSociales3 = new Instruccion(10, 2, "Caminar", 20)
-    this.laboratorioSociales4 = new Instruccion(11, 2, "Girar a la derecha", 0)
-    this.laboratorioSociales5 = new Instruccion(12, 2, "Caminar", 5)
-    this.laboratorioSociales6 = new Instruccion(13, 2, "Girar a la izquierda", 0)
-    this.laboratorioSociales7 = new Instruccion(14, 2, "Caminar", 40)
-    this.laboratorioSociales8 = new Instruccion(15, 2, "Girar a la izquierda", 0)
-    this.laboratorioSociales9 = new Instruccion(16, 2, "Caminar", 15)
-    this.laboratorioSociales10 = new Instruccion(17, 2, "Girar a la derecha", 0)
-    this.laboratorioSociales11 = new Instruccion(18, 2, "Caminar", 75)
-    this.laboratorioSociales12 = new Instruccion(19, 2, "Girar a la derecha", 0)
-    this.laboratorioSociales13 = new Instruccion(20, 2, "Caminar", 3)
-    this.laboratorioSociales14 = new Instruccion(21, 2, "Girar a la izquierda", 0)
-    this.laboratorioSociales15 = new Instruccion(22, 2, "Caminar", 3)
-    this.laboratorioSociales16 = new Instruccion(23, 2, "Girar a la derecha", 0)
-    this.laboratorioSociales17 = new Instruccion(24, 2, "Caminar", 10)
+    this.deptoAlumnosTornaviasUnsam1 = new Instruccion(1, 2, "Caminar", 20)
+    this.deptoAlumnosTornaviasUnsam2 = new Instruccion(2, 2, "Girar a la izquierda", 0)
+    this.deptoAlumnosTornaviasUnsam3 = new Instruccion(4, 2, "Girar a la derecha", 0)
+    this.deptoAlumnosTornaviasUnsam4 = new Instruccion(5, 2, "Caminar", 20)
+    this.deptoAlumnosTornaviasUnsam5 = new Instruccion(6, 2, "Subir escalones", 20)
+    this.deptoAlumnosTornaviasUnsam6 = new Instruccion(7, 2, "Caminar", 35)
+    this.laboratorioSociales1 = new Instruccion(8, 4, "Caminar", 20)
+    this.laboratorioSociales2 = new Instruccion(9, 4, "Girar a la derecha", 0)
+    this.laboratorioSociales3 = new Instruccion(10, 4, "Caminar", 20)
+    this.laboratorioSociales4 = new Instruccion(11, 4, "Girar a la derecha", 0)
+    this.laboratorioSociales5 = new Instruccion(12, 4, "Caminar", 5)
+    this.laboratorioSociales6 = new Instruccion(13, 4, "Girar a la izquierda", 0)
+    this.laboratorioSociales7 = new Instruccion(14, 4, "Caminar", 40)
+    this.laboratorioSociales8 = new Instruccion(15, 4, "Girar a la izquierda", 0)
+    this.laboratorioSociales9 = new Instruccion(16, 4, "Caminar", 15)
+    this.laboratorioSociales10 = new Instruccion(17, 4, "Girar a la derecha", 0)
+    this.laboratorioSociales11 = new Instruccion(18, 4, "Caminar", 75)
+    this.laboratorioSociales12 = new Instruccion(19, 4, "Girar a la derecha", 0)
+    this.laboratorioSociales13 = new Instruccion(20, 4, "Caminar", 3)
+    this.laboratorioSociales14 = new Instruccion(21, 4, "Girar a la izquierda", 0)
+    this.laboratorioSociales15 = new Instruccion(22, 4, "Caminar", 3)
+    this.laboratorioSociales16 = new Instruccion(23, 4, "Girar a la derecha", 0)
+    this.laboratorioSociales17 = new Instruccion(24, 4, "Caminar", 10)
     this.salaRXPirovano1 = new Instruccion(25, 5, "Caminar", 10)
     this.salaRXPirovano2 = new Instruccion(26, 5, "Girar a la izquierda", 0)
     this.salaRXPirovano3 = new Instruccion(27, 5, "Subir ascensor", 5)

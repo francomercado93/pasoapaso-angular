@@ -4,6 +4,7 @@ import Speech from 'speak-tts';
 import { StubRutaService } from 'src/app/services/ruta.service';
 import { Ruta } from '../busqueda.component';
 import { Instruccion } from 'src/app/domain/instruccion';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'ruta',
@@ -33,9 +34,11 @@ export class SeguirrutaComponent implements OnInit {
     });
     const id = +this.route.snapshot.paramMap.get('id');
     // this.getRuta(id);
-    // this.ruta = await this.rutaService.getRutaById(id)
+    this.ruta = await this.rutaService.getRutaById(id)
     this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
-    this.inicializarVoz();
+    this.inicializarVoz()
+    await delay(2000)
+    this.leerInstruccion("Seguir ruta " + this.ruta.nombre)
   }
 
   inicializarVoz() {
@@ -83,27 +86,32 @@ export class SeguirrutaComponent implements OnInit {
   }
 
   siguienteOpcion() {
-    var instruccion = this.instrucciones[this.i].tipoInstruccion
-    const cantidad = this.instrucciones[this.i].cantidad
-    if (instruccion.includes("Caminar")) {
-      instruccion = instruccion + " " + cantidad + " pasos"
+    if (this.instrucciones == null || this.instrucciones.length == 0) {
+      this.leerInstruccion("La ruta seleccionada no tiene instrucciones cargadas")
     }
-    if (instruccion.includes("escalones")) {
-      var aux = instruccion.split(" ")
-      instruccion = aux[0] + " " + cantidad + aux[1]
-    }
-    if (instruccion.includes("ascensor")) {
-      var aux = instruccion.split(" ")
-      instruccion = aux[0] + " " + cantidad + aux[1]
-    }
-    this.leerInstruccion(instruccion);
-    this.i++;
-    if (this.i >= this.instrucciones.length) {
-      this.leerInstruccion("A llegado a su destino")
+    else {
+      var instruccion = this.instrucciones[this.i].tipoInstruccion
+      const cantidad = this.instrucciones[this.i].cantidad
+      if (instruccion.includes("Caminar")) {
+        instruccion = instruccion + " " + cantidad + " pasos"
+      }
+      if (instruccion.includes("escalones")) {
+        var aux = instruccion.split(" ")
+        instruccion = aux[0] + " " + cantidad + aux[1]
+      }
+      if (instruccion.includes("ascensor")) {
+        var aux = instruccion.split(" ")
+        instruccion = aux[0] + " " + cantidad + " pisos "+ aux[1]
+      }
+      this.leerInstruccion(instruccion);
+      this.i++;
+      if (this.i >= this.instrucciones.length) {
+        this.leerInstruccion("A llegado a su destino")
+      }
     }
   }
 
   get opcionNoValida(): Boolean {
-    return this.i >= this.instrucciones.length;
+    return this.instrucciones == null ? false : this.i >= this.instrucciones.length
   }
 }
