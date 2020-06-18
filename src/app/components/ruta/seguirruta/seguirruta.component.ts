@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import Speech from 'speak-tts';
-import { StubRutaService } from 'src/app/services/ruta.service';
-import { Ruta } from '../busqueda.component';
-import { Instruccion } from 'src/app/domain/instruccion';
 import { delay } from 'rxjs/operators';
+import Speech from 'speak-tts';
+import { Instruccion } from 'src/app/domain/instruccion';
+import { RutaService } from 'src/app/services/ruta.service';
+import { Ruta } from '../busqueda.component';
 
 @Component({
   selector: 'ruta',
@@ -16,29 +16,25 @@ export class SeguirrutaComponent implements OnInit {
 
   speech: Speech = new Speech()
   i: number = 0
-
-  // instruccion = { id: 0, instruccion: "Iniciando instrucciones" };
-  // instruccion2 = { id: 1, instruccion: "en bicho bicho yo me convertí" };
-  // instruccion3 = { id: 2, instruccion: "cocodrilo soy" };
-  // instrucciones: Instruccion[] = [this.instruccion, this.instruccion2, this.instruccion3];
-  // //Ruta
-  // ruta: Ruta = { id: 0, nombre: 'Seleccione la ruta', idLocacion: 0, instrucciones: this.instrucciones }
   ruta: Ruta
   instrucciones: Instruccion[]
+  inicio: Boolean = true
+  deshabilitado: Boolean
 
-  constructor(private route: ActivatedRoute, private rutaService: StubRutaService) { }
+  constructor(private route: ActivatedRoute, private rutaService: RutaService) { }
 
   async ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      console.log(params);
-    });
+    this.speech = new Speech()
     const id = +this.route.snapshot.paramMap.get('id');
-    // this.getRuta(id);
     this.ruta = await this.rutaService.getRutaById(id)
     this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
     this.inicializarVoz()
     await delay(2000)
     this.leerInstruccion("Seguir ruta " + this.ruta.nombre)
+  }
+
+  get textButton(): String {
+    return this.inicio ? "INICIAR RUTA" : "SIGUIENTE"
   }
 
   inicializarVoz() {
@@ -59,6 +55,10 @@ export class SeguirrutaComponent implements OnInit {
   }
 
   leerInstruccion(instruccion: string) {
+    this.deshabilitado = true
+    if (instruccion.length > 30) {
+      this.speech.setRate(1.3)
+    }
     this.speech
       .speak({
         text: instruccion,
@@ -66,6 +66,12 @@ export class SeguirrutaComponent implements OnInit {
         listeners: {
           onstart: () => {
             console.log("Instrucción: " + instruccion);
+          },
+          onend: () => {
+            console.log("Termino")
+          },
+          onresume: () => {
+            console.log("Resumen")
           },
           onboundary: event => {
             console.log(
@@ -77,8 +83,9 @@ export class SeguirrutaComponent implements OnInit {
           }
         }
       })
-      .then(data => {
-        console.log("Ingrese la opción elegida", data);
+      .then(() => {
+        console.log("Funcionó")
+        this.deshabilitado = false
       })
       .catch(e => {
         console.error("Ocurrio un error: ", e);
@@ -86,6 +93,9 @@ export class SeguirrutaComponent implements OnInit {
   }
 
   siguienteOpcion() {
+    if (this.inicio) {
+      this.inicio = false
+    }
     if (this.instrucciones == null || this.instrucciones.length == 0) {
       this.leerInstruccion("La ruta seleccionada no tiene instrucciones cargadas")
     }
@@ -101,7 +111,7 @@ export class SeguirrutaComponent implements OnInit {
       }
       if (instruccion.includes("ascensor")) {
         var aux = instruccion.split(" ")
-        instruccion = aux[0] + " " + cantidad + " pisos "+ aux[1]
+        instruccion = aux[0] + " " + cantidad + " pisos " + aux[1]
       }
       this.leerInstruccion(instruccion);
       this.i++;

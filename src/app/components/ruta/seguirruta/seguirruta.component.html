@@ -2,24 +2,25 @@
     <span class="fill-remaining-space">Seguir Ruta</span>
 </mat-toolbar>
 
-<div class="container">
+<div class="container animate__animated animate__fadeIn">
     <mat-grid-list cols="1" rowHeight="2:1" *ngIf="!opcionNoValida">
         <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightblue'">
-            <button mat-button (click)="siguienteOpcion()" [disabled]="opcionNoValida">INICIAR RUTA/SIGUIENTE</button>
+            <button mat-button (click)="siguienteOpcion()" [disabled]="opcionNoValida || deshabilitado"
+                class="boton">{{textButton}}</button>
         </mat-grid-tile>
         <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightgreen'">
-            <button mat-button>ME PERDI</button>
+            <button mat-button class="boton" [disabled]="deshabilitado">ME PERDI</button>
         </mat-grid-tile>
         <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightpink'">
-            <button mat-button>ABANDONAR RUTA</button>
+            <button mat-button class="boton" [disabled]="deshabilitado">ABANDONAR RUTA</button>
         </mat-grid-tile>
     </mat-grid-list>
     <mat-grid-list cols="1" rowHeight="1.5:1" *ngIf="opcionNoValida">
         <mat-grid-tile cols="1" rowHeight="1.5:1" [style.background]="'lightblue'">
-            <button mat-button>AGREGAR FAVORITOS</button>
+            <button mat-button class="boton">AGREGAR FAVORITOS</button>
         </mat-grid-tile>
         <mat-grid-tile cols="1" rowHeight="1.5:1" [style.background]="'lightgreen'">
-            <button mat-button routerLink="/">BUSCAR NUEVA RUTA</button>
+            <button mat-button routerLink="/app-busquedanv" class="boton">BUSCAR NUEVA RUTA</button>
         </mat-grid-tile>
     </mat-grid-list>
 </div>

@@ -2,16 +2,21 @@
   <span class="fill-remaining-space">Buscar Ruta</span>
 </mat-toolbar>
 
-<div class="container">
+<!-- <div class="container" *ngIf="categorias == null || categorias.length == 0">
+  <mat-spinner></mat-spinner>
+</div> -->
+
+<div class="container animate__animated animate__fadeIn">
   <mat-grid-list cols="1" rowHeight="2:1">
+    <!-- <h3>{{texto}}</h3> -->
     <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightblue'">
-      <button mat-button (click)="siguienteOpcion()">SIGUIENTE</button>
+      <button mat-button (click)="siguienteOpcion()" class="boton" [disabled]="deshabilitado">SIGUIENTE</button>
     </mat-grid-tile>
     <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightgreen'">
-      <button mat-button (click)="anteriorOpcion()">ANTERIOR</button>
+      <button mat-button (click)="anteriorOpcion()" class="boton" [disabled]="deshabilitado">ANTERIOR</button>
     </mat-grid-tile>
     <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightpink'">
-      <button mat-button (click)="confirmarOpcion()" [disabled]="opcionNoValida">OK</button>
+      <button mat-button (click)="confirmarOpcion()" [disabled]="opcionNoValida || deshabilitado" class="boton">OK</button>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

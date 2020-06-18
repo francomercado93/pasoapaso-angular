@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Speech from "speak-tts";
-import { StubLocacionService } from 'src/app/services/locacion.service';
-import { StubRutaService } from 'src/app/services/ruta.service';
 import { Categoria } from 'src/app/domain/categoria';
 import { Locacion } from 'src/app/domain/locacion';
 import { Ruta } from 'src/app/domain/ruta';
-import { Router } from '@angular/router';
+import { LocacionService } from 'src/app/services/locacion.service';
+import { RutaService } from 'src/app/services/ruta.service';
 
 @Component({
   selector: 'app-busquedanv',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class BusquedaNvComponent implements OnInit {
 
-  speech: Speech = new Speech()
+  speech: Speech
   i: number = 0
   j: number = 0
   categoriaSeleccionada: Categoria
@@ -24,15 +24,17 @@ export class BusquedaNvComponent implements OnInit {
   categorias: Categoria[] = new Array
   locaciones: Locacion[] = new Array
   rutas: Ruta[] = new Array
-
-  constructor(private locacionService: StubLocacionService, private rutaService: StubRutaService, private route: Router) { }
+  texto: string = ""
+  deshabilitado: Boolean
+  constructor(private locacionService: LocacionService, private rutaService: RutaService, private route: Router) { }
 
   async ngOnInit() {
+    this.speech = new Speech()
     this.categorias = await this.locacionService.getCategorias()
     this.inicializarVoz()
     await delay(3000)
     this.leerInstruccion("Seleccione una categoría")
-    await delay(2000)
+    await delay(3000)
     this.leerInstruccion(this.categorias[this.i].nombre)
   }
 
@@ -92,9 +94,9 @@ export class BusquedaNvComponent implements OnInit {
         this.locaciones = await this.locacionService.getLocacionesCategoria(this.categoriaSeleccionada.id)
         if (this.locaciones == null || this.locaciones.length == 0) {
           this.leerInstruccion("La categoría seleccionada no tiene locaciones cargadas")
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion("Seleccione una locación")
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion(this.categorias[this.i].nombre)
           this.categoriaSeleccionada = null
           this.j = 0
@@ -103,7 +105,7 @@ export class BusquedaNvComponent implements OnInit {
           this.leerInstruccion("Confirmado " + this.categoriaSeleccionada.nombre)
           this.j++
           this.i = 0
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion("Seleccione una locación")
           this.leerInstruccion(this.locaciones[this.i].nombre)
         }
@@ -113,19 +115,19 @@ export class BusquedaNvComponent implements OnInit {
         this.rutas = await this.rutaService.getRutasLocacion(this.locacionSeleccionada.id)
         if (this.rutas == null || this.rutas.length == 0) {
           this.leerInstruccion("La locación seleccionada no tiene rutas cargadas")
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion("Seleccione una locación")
           this.locacionSeleccionada = null
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion(this.locaciones[this.i].nombre)
           this.j = 1
         } else {
           console.log("Cantidad de rutas " + this.locacionSeleccionada.nombre + " " + this.rutas.length)
           console.log("Confirmado " + this.locacionSeleccionada.nombre)
           this.leerInstruccion("Confirmado " + this.locacionSeleccionada.nombre)
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion("Seleccione una ruta")
-          await delay(2000)
+          await delay(3000)
           this.leerInstruccion(this.rutas[this.i].nombre)
           this.j++
           this.i = 0
@@ -153,12 +155,13 @@ export class BusquedaNvComponent implements OnInit {
       .init({
         volume: 0.5,
         lang: "es-ES",
-        rate: 0.88,
+        rate: 1,
         'voice': 'Google español',
         'splitSentences': false
       })
       .then(data => {
         console.log(data)
+        this.deshabilitado = false
       })
       .catch(e => {
         console.error("El siguiente error se produjo al inicializarse: ", e);
@@ -167,6 +170,11 @@ export class BusquedaNvComponent implements OnInit {
   }
 
   leerInstruccion(instruccion: string) {
+    this.deshabilitado = true
+    this.texto = instruccion
+    if (instruccion.length > 30) {
+      this.speech.setRate(1.3)
+    }
     this.speech
       .speak({
         text: instruccion,
@@ -174,6 +182,12 @@ export class BusquedaNvComponent implements OnInit {
         listeners: {
           onstart: () => {
             console.log("Instruccion: " + instruccion);
+          },
+          onend: () => {
+            console.log("Termino")
+          },
+          onresume: () => {
+            console.log("Resumen")
           },
           onboundary: event => {
             console.log(
@@ -185,8 +199,9 @@ export class BusquedaNvComponent implements OnInit {
           }
         }
       })
-      .then(data => {
-        console.log("Funcionó! ", data);
+      .then(() => {
+        console.log("Funcionó! ");
+        this.deshabilitado = false
       })
       .catch(e => {
         console.error("Ocurrio un error: ", e);

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Locacion } from '../domain/locacion';
 import { Categoria } from '../domain/categoria';
+import { HttpClient } from '@angular/common/http';
+import { baseUrl } from '../configuration/baseUrl';
 
 export interface ILocacionService {
   getLocaciones(): Promise<any>
@@ -16,26 +18,33 @@ export interface ILocacionService {
 
 export class LocacionService implements ILocacionService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  getLocacionesCategoria(idCategoria: number): Promise<any> {
-    throw new Error("Method not implemented.");
+  async getLocacionesCategoria(idCategoria: number): Promise<any> {
+    const res = await this.httpClient.get<Array<Locacion>>(`${baseUrl}/locaciones-tipo/${idCategoria}`).toPromise()
+    return res
   }
 
-  getCategorias(): Promise<any> {
-    throw new Error("Method not implemented.");
+  async getCategorias(): Promise<any> {
+    const res = await this.httpClient.get<Array<Categoria>>(`${baseUrl}/categorias`).toPromise()
+    console.log("Categorias")
+    console.log(res)
+    return res
+  }
+
+  async getLocaciones(): Promise<any> {
+    const res = await this.httpClient.get<Array<Locacion>>(`${baseUrl}/locaciones`).toPromise()
+    return res
   }
 
   crearLocacion(locacion: Locacion): Promise<any> {
     throw new Error("Method not implemented.");
   }
-
-  getLocaciones(): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
   getLocacionesByName(nombre: string): Promise<any> {
     throw new Error("Method not implemented.");
   }
+
+
 }
 
 @Injectable({
