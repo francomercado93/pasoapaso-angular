@@ -6,6 +6,7 @@ import { Locacion } from 'src/app/domain/locacion';
 import { Ruta } from 'src/app/domain/ruta';
 import { LocacionService } from 'src/app/services/locacion.service';
 import { RutaService } from 'src/app/services/ruta.service';
+import { Usuario } from 'src/app/domain/usuario';
 
 @Component({
   selector: 'app-busquedanv',

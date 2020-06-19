@@ -1,0 +1,6 @@
+-Dar de alta una locacion 	ESTEBAN
+-crear una ruta  FRANCO
+- Que un usuario anonimo pueda buscar la locación y la ruta y seguirla(vidente) FABIAN.
+- Proponer la ruta para publicarla PENDIENTE
+- Aprobar la publicacion PENDIENTE
+-crear la ruta inversa para volver al punto de partida PENDIENTE

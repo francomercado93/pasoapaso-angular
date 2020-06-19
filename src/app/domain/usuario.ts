@@ -1,15 +1,5 @@
 export class Usuario {
-    /*
-    usuario: string
-    alias: string
-    nombre: string
-    apellido: string
-    password: string
-    esVidente: boolean
-    tipoUsuario: number
-    */
-
-    constructor(usuario: string, alias: string, nombre: string,
-        apellido: string, password: string, esVidente: boolean, tipoUsuario: number) {
+    constructor(public usuario?: string, public alias?: string, public nombre?: string,
+        public apellido?: string, public password?: string, public esVidente?: boolean, public tipoUsuario?: number) {
     }
 }
