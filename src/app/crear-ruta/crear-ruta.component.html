@@ -1,0 +1,44 @@
+<h1>Crear ruta</h1>
+<h3>Por favor complete la ruta</h3>
+<mat-form-field appearance="outline">
+    <mat-label>Nombre ruta</mat-label>
+    <input matInput placeholder="Ingrese un nombre de ruta">
+    <mat-error *ngIf="false">pepe</mat-error>
+</mat-form-field>
+<mat-form-field appearance="outline">
+    <mat-label>Institución</mat-label>
+    <mat-select>
+        <mat-option value="option">Hospitales</mat-option>
+        <mat-option value="option">Universidades</mat-option>
+        <mat-option value="option">Museos</mat-option>
+    </mat-select>
+    <mat-hint align="end">Elija una opción de la lista</mat-hint>
+</mat-form-field>
+<mat-form-field appearance="outline">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput></textarea>
+</mat-form-field>
+
+<h3>Paso:</h3>
+<mat-form-field appearance="outline">
+    <mat-label>Tipo instrucción</mat-label>
+    <mat-select>
+        <mat-option value="option">Caminar</mat-option>
+        <mat-option value="option">Girar a la izquierda</mat-option>
+        <mat-option value="option">Girar a la derecha</mat-option>
+        <mat-option value="option">Subir escalones</mat-option>
+        <mat-option value="option">Bajar escalones</mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-form-field appearance="outline">
+    <mat-label>Cantidad</mat-label>
+    <input type="number" matInput placeholder="Ingrese un nombre de ruta">
+    <mat-error *ngIf="false">pepe</mat-error>
+</mat-form-field>
+
+<button mat-raised-button color="primary">+Paso</button>
+<button mat-raised-button color="primary">Cancelar</button>
+<button mat-raised-button color="primary">Guardar</button>
+
+<p>Instrucciones:</p>
+<p>Aquí puede crear una ruta privada</p>
