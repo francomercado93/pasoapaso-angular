@@ -3,6 +3,7 @@ import { Locacion } from '../domain/locacion';
 import { Categoria } from '../domain/categoria';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from '../configuration/baseUrl';
+import { Usuario } from '../domain/usuario';
 
 export interface ILocacionService {
   getLocaciones(): Promise<any>
@@ -27,8 +28,6 @@ export class LocacionService implements ILocacionService {
 
   async getCategorias(): Promise<any> {
     const res = await this.httpClient.get<Array<Categoria>>(`${baseUrl}/categorias`).toPromise()
-    console.log("Categorias")
-    console.log(res)
     return res
   }
 

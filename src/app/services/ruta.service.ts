@@ -3,6 +3,7 @@ import { Ruta } from '../domain/ruta';
 import { Instruccion } from '../domain/instruccion';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from '../configuration/baseUrl';
+import { TipoInstruccion } from '../domain/tipoInstruccion';
 
 export interface IRutaService {
 
@@ -10,7 +11,7 @@ export interface IRutaService {
   crearNuevaRuta(ruta: Ruta): Promise<any>
   getRutaById(idRuta: number): Promise<any>
   getInstruccionesRuta(idRuta: number): Promise<any>
-
+  getTiposInstrucciones(): Promise<any>
 }
 
 @Injectable({
@@ -26,9 +27,9 @@ export class RutaService implements IRutaService {
     return res
   }
 
-  crearNuevaRuta(ruta: Ruta): Promise<any> {
-    // return this.httpClient.get<Array<Ruta>>(`${baseUrl}/mascotas`);
-    throw new Error("Method not implemented.");
+  async crearNuevaRuta(ruta: Ruta): Promise<any> {
+    console.log(ruta)
+    return this.httpClient.post<Ruta>(`${baseUrl}/rutas`, ruta).toPromise()
   }
 
   async getRutasLocacion(idLocacion: number): Promise<any> {
@@ -41,6 +42,10 @@ export class RutaService implements IRutaService {
     console.log("Ruta")
     console.log(res)
     return res
+  }
+
+  async getTiposInstrucciones(): Promise<any>{
+    return this.httpClient.get<TipoInstruccion>(`${baseUrl}/tipos-instrucciones`).toPromise()
   }
 }
 
