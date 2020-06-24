@@ -1,4 +1,37 @@
 .full-width{
-    width: 100%;
-    /* height: auto; */
+    width: 100%; 
+    /* padding-right: 10px;
+    padding-left: 10px; */
+}
+
+.row{
+    width: 95%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.input-paso{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 98%;
+}
+
+.button-paso{
+    width: 10rem;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
+.row-button{
+    align-self: center;
+}
+
+.buttons{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.button-eliminar{
+    margin-left: 20px;
+    margin-top: 10px
 }

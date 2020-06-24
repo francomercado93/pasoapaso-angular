@@ -55,15 +55,19 @@ export class CrearRutaComponent implements OnInit {
 
   createInstruccion(): FormGroup {
     return this.fb.group({
-      id: [''],
+      id: [this.cantidadInstrucciones],
       idRuta: [''],
       tipoInstruccion: ['', [Validators.required]],
       cantidad: ['', [Validators.min(0), Validators.required]]
     })
   }
+  get cantidadInstrucciones() {
+    return this.instrucciones.length
+  }
 
   async onSubmit() {
     try {
+      console.log(this.rutaForm.value)
       await this.rutaService.crearNuevaRuta(this.rutaForm.value)
       this.openSnackBar()
       // Redirigir a administrar locaciones
@@ -74,6 +78,7 @@ export class CrearRutaComponent implements OnInit {
   }
 
   reset() {
+    console.log(this.rutaForm.value)
     this.rutaForm.reset()
     this.setValidators()
     // this.rutaForm.markAsUntouched()
@@ -83,5 +88,9 @@ export class CrearRutaComponent implements OnInit {
     this.snackBar.open('Nueva ruta creada!', "Ok", {
       duration: 3000,
     })
+  }
+
+  eliminarInstruccion(i: number){
+    this.instrucciones.removeAt(i)
   }
 }
