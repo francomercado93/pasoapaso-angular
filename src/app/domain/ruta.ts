@@ -1,5 +1,7 @@
+import { Instruccion } from './instruccion';
+
 export class Ruta {
-    constructor(public id?: number, public esPublica?: number, public locacion?: number,
-        public nombre?: string, public usuario?: string, public fechaCreacion?: Date, public descripcion?: string, public estado?: number, public instrucciones?: string) {
+    constructor(public id?: number, public esPublica?: number, public locacion?: string,
+        public nombre?: string, public usuario?: string, public fechaCreacion?: string, public descripcion?: string, public estado?: number, public instrucciones?: Instruccion[]) {
     }
 }

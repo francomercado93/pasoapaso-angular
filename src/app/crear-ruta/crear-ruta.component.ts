@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Instruccion } from '../domain/instruccion';
-import { Ruta } from '../domain/ruta';
-import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { RutaService } from '../services/ruta.service';
-import { TipoInstruccion } from '../domain/tipoInstruccion';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Locacion } from '../domain/locacion';
+import { TipoInstruccion } from '../domain/tipoInstruccion';
 import { LocacionService } from '../services/locacion.service';
+import { RutaService } from '../services/ruta.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-crear-ruta',
@@ -20,7 +18,7 @@ export class CrearRutaComponent implements OnInit {
   rutaForm: FormGroup
   instrucciones: FormArray
 
-  constructor(private fb: FormBuilder, private rutaService: RutaService, private locacionService: LocacionService) { }
+  constructor(private fb: FormBuilder, private rutaService: RutaService, private locacionService: LocacionService, private snackBar: MatSnackBar) { }
 
   async ngOnInit() {
     try {
@@ -34,14 +32,15 @@ export class CrearRutaComponent implements OnInit {
   }
 
   setValidators() {
+
     this.rutaForm = this.fb.group({
-      id: '',
+      id: 0,
       esPublica: 0,
       locacion: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
       usuario: 'lamponne@gmail.com',
       fechaCreacion: '2020-05-06',
-      descripcion: [''],
+      descripcion: '',
       estado: 1,
       instrucciones: this.fb.array([
       ])
@@ -56,23 +55,33 @@ export class CrearRutaComponent implements OnInit {
 
   createInstruccion(): FormGroup {
     return this.fb.group({
-      id: '',
-      idRuta: '',
+      id: 0,
+      idRuta: 0,
       tipoInstruccion: ['', [Validators.required]],
-      cantidad: ['', [Validators.min(0)]]
+      cantidad: ['', [Validators.min(0), Validators.required]]
     })
   }
 
-  onSubmit() {
+  async onSubmit() {
     try {
-      this.rutaService.crearNuevaRuta(this.rutaForm.value)
+      console.log(this.rutaForm.value)
+      await this.rutaService.crearNuevaRuta(this.rutaForm.value)
+      this.openSnackBar()
+      this.reset()
     } catch (e) {
       console.log(e)
     }
   }
 
-  cancelar(){
-    console.log(this.rutaForm.value)
+  reset() {
+    this.rutaForm.reset()
+    this.setValidators()
+    this.rutaForm.markAsUntouched()
   }
 
+  openSnackBar() {
+    this.snackBar.open('Nueva ruta creada!', "Ok", {
+      duration: 3000,
+    })
+  }
 }

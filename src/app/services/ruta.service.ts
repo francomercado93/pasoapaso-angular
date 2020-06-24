@@ -28,7 +28,6 @@ export class RutaService implements IRutaService {
   }
 
   async crearNuevaRuta(ruta: Ruta): Promise<any> {
-    console.log(ruta)
     return this.httpClient.post<Ruta>(`${baseUrl}/rutas`, ruta).toPromise()
   }
 
@@ -44,7 +43,7 @@ export class RutaService implements IRutaService {
     return res
   }
 
-  async getTiposInstrucciones(): Promise<any>{
+  async getTiposInstrucciones(): Promise<any> {
     return this.httpClient.get<TipoInstruccion>(`${baseUrl}/tipos-instrucciones`).toPromise()
   }
 }
