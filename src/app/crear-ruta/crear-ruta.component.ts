@@ -5,6 +5,7 @@ import { TipoInstruccion } from '../domain/tipoInstruccion';
 import { LocacionService } from '../services/locacion.service';
 import { RutaService } from '../services/ruta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-ruta',
@@ -18,7 +19,7 @@ export class CrearRutaComponent implements OnInit {
   rutaForm: FormGroup
   instrucciones: FormArray
 
-  constructor(private fb: FormBuilder, private rutaService: RutaService, private locacionService: LocacionService, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private rutaService: RutaService, private locacionService: LocacionService, private snackBar: MatSnackBar, private route: Router) { }
 
   async ngOnInit() {
     try {
@@ -32,16 +33,15 @@ export class CrearRutaComponent implements OnInit {
   }
 
   setValidators() {
-
     this.rutaForm = this.fb.group({
-      id: 0,
-      esPublica: 0,
+      id: [''],
+      esPublica: [0],
       locacion: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
-      usuario: 'lamponne@gmail.com',
-      fechaCreacion: '2020-05-06',
-      descripcion: '',
-      estado: 1,
+      usuario: ['lamponne@gmail.com'],
+      fechaCreacion: ['2020-05-06'],
+      descripcion: [''],
+      estado: [1],
       instrucciones: this.fb.array([
       ])
     })
@@ -55,8 +55,8 @@ export class CrearRutaComponent implements OnInit {
 
   createInstruccion(): FormGroup {
     return this.fb.group({
-      id: 0,
-      idRuta: 0,
+      id: [''],
+      idRuta: [''],
       tipoInstruccion: ['', [Validators.required]],
       cantidad: ['', [Validators.min(0), Validators.required]]
     })
@@ -64,10 +64,10 @@ export class CrearRutaComponent implements OnInit {
 
   async onSubmit() {
     try {
-      console.log(this.rutaForm.value)
       await this.rutaService.crearNuevaRuta(this.rutaForm.value)
       this.openSnackBar()
-      this.reset()
+      // Redirigir a administrar locaciones
+      this.route.navigate(['/app-busquedanv'])
     } catch (e) {
       console.log(e)
     }
@@ -76,7 +76,7 @@ export class CrearRutaComponent implements OnInit {
   reset() {
     this.rutaForm.reset()
     this.setValidators()
-    this.rutaForm.markAsUntouched()
+    // this.rutaForm.markAsUntouched()
   }
 
   openSnackBar() {

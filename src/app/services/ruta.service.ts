@@ -28,7 +28,19 @@ export class RutaService implements IRutaService {
   }
 
   async crearNuevaRuta(ruta: Ruta): Promise<any> {
-    return this.httpClient.post<Ruta>(`${baseUrl}/rutas`, ruta).toPromise()
+    const nuevaRutaId = await this.httpClient.post<Ruta>(`${baseUrl}/rutas`, ruta).toPromise()
+    this.crearNuevasInstrucciones(nuevaRutaId, ruta.instrucciones)
+    return nuevaRutaId
+  }
+
+  crearNuevasInstrucciones(nuevaRutaId: any, instrucciones: Instruccion[]) {
+    instrucciones.forEach(instruccion => {
+      this.insertInstruccion(instruccion, nuevaRutaId)
+    })
+  }
+
+  async insertInstruccion(instruccion: Instruccion, nuevaRutaId: number) {
+    return this.httpClient.post<Instruccion>(`${baseUrl}/instrucciones/${nuevaRutaId}`, instruccion).toPromise()
   }
 
   async getRutasLocacion(idLocacion: number): Promise<any> {

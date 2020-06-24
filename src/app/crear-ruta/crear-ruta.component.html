@@ -58,8 +58,8 @@
             <button mat-raised-button color="primary" (click)="agregarInstruccion()" type="button">+Paso</button>
         </div>
         <div fxFlex="20">
-            <button mat-raised-button color="primary" type="button" (click)="reset()">Cancelar</button>
-            <button mat-raised-button color="primary" type="submit" [disabled]="!rutaForm.valid || rutaForm.pristine || rutaForm.untouched">Guardar</button>
+            <button mat-raised-button color="primary" type="button" (click)="reset()"  [disabled]="rutaForm.pristine || rutaForm.untouched">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!rutaForm.valid || rutaForm.pristine || rutaForm.untouched" autofocus>Guardar</button>
         </div>
         <div fxFlex="20">
             <p>Instrucciones:</p>
