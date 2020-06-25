@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 //Flex-Layout
 import { FlexLayoutModule } from '@angular/flex-layout';
 //Reactive Form
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -64,11 +64,6 @@ import { SidenavResponsiveExample } from './components/sidenav/sidenav.component
 import { Material } from './material.module';
 import { CrearRutaComponent } from './crear-ruta/crear-ruta.component';
 
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +82,7 @@ import { CrearRutaComponent } from './crear-ruta/crear-ruta.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     Material
   ],

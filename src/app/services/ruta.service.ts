@@ -50,8 +50,6 @@ export class RutaService implements IRutaService {
 
   async getRutaById(idRuta: number): Promise<any> {
     const res = this.httpClient.get<Ruta>(`${baseUrl}/rutas/${idRuta}`).toPromise()
-    console.log("Ruta")
-    console.log(res)
     return res
   }
 

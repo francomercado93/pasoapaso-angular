@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LocacionComponent } from './components/locacion/locacion.component';
+import { RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { BusquedaComponent } from './components/ruta/busqueda.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 import { BusquedaNvComponent } from './components/ruta/busquedanv/busquedanv.component';
+import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 import { CrearRutaComponent } from './crear-ruta/crear-ruta.component';
+import { LocacionComponent } from './components/locacion/locacion.component';
 
 
 const routes: Routes = [

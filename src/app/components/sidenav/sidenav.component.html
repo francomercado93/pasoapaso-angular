@@ -3,9 +3,9 @@
         <button mat-icon-button (click)="snav.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
-        <!-- <button mat-mini-fab color="accent" routerLink="/">
+        <button mat-mini-fab color="accent" routerLink="/">
             <mat-icon>home</mat-icon>
-        </button> -->
+        </button>
         <!--<a routerLink="." class="example-app-name" style="text-decoration: none; color: #FFFFFF;">PasoAPaso</a>-->
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -27,6 +27,10 @@
                 <mat-divider></mat-divider>
                 <a mat-list-item routerLink="crear-ruta">
                     <mat-icon mat-list-icon>maps-ugc</mat-icon> Crear ruta
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-list-item routerLink="app-locacion">
+                    <mat-icon mat-list-icon>location_on</mat-icon> Crear locacion
                 </a>
                 <mat-divider></mat-divider>
             </mat-nav-list>
