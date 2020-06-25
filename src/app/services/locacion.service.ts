@@ -3,6 +3,7 @@ import { Locacion } from '../domain/locacion';
 import { Categoria } from '../domain/categoria';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from '../configuration/baseUrl';
+import { Provincia } from '../domain/provincia';
 
 export interface ILocacionService {
   getLocaciones(): Promise<any>
@@ -10,6 +11,7 @@ export interface ILocacionService {
   crearLocacion(locacion: Locacion): Promise<any>
   getCategorias(): Promise<any>
   getLocacionesCategoria(idCategoria: number): Promise<any>
+  getProvincias(): Promise<any>
 }
 
 @Injectable({
@@ -27,29 +29,34 @@ export class LocacionService implements ILocacionService {
 
   async getCategorias(): Promise<any> {
     const res = await this.httpClient.get<Array<Categoria>>(`${baseUrl}/categorias`).toPromise()
-    console.log("Categorias")
-    console.log(res)
     return res
   }
 
-  async getLocaciones(): Promise<any> {
+  async getLocaciones(): Promise<Array<Locacion>> {
     const res = await this.httpClient.get<Array<Locacion>>(`${baseUrl}/locaciones`).toPromise()
     return res
   }
 
-  crearLocacion(locacion: Locacion): Promise<any> {
-    throw new Error("Method not implemented.");
+  async crearLocacion(locacion: Locacion): Promise<any> {
+    const res = await this.httpClient.post(`${baseUrl}/crearlocacion`, locacion).toPromise()
+    return res
   }
+
+  async getProvincias(): Promise<any> {
+    const res = await this.httpClient.get<Array<Provincia>>(`${baseUrl}/provincias`).toPromise()
+    return res
+  }
+
   getLocacionesByName(nombre: string): Promise<any> {
     throw new Error("Method not implemented.");
   }
-
-
 }
 
+/*
 @Injectable({
   providedIn: 'root'
 })
+
 export class StubLocacionService implements ILocacionService {
 
   locaciones: Locacion[] = new Array
@@ -100,3 +107,4 @@ export class StubLocacionService implements ILocacionService {
     return this.locaciones.filter(locacion => locacion.nombre.includes(nombre))
   }
 }
+*/

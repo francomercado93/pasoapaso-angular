@@ -62,6 +62,7 @@ import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.com
 import { SidenavResponsiveExample } from './components/sidenav/sidenav.component';
 //Material
 import { Material } from './material.module';
+import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.component';
 
 
 
@@ -77,7 +78,8 @@ import { Material } from './material.module';
     BusquedaComponent,
     NotFoundComponent,
     BusquedaNvComponent,
-    SeguirrutaComponent
+    SeguirrutaComponent,
+    RutavidenteComponent
   ],
   imports: [
     BrowserModule,

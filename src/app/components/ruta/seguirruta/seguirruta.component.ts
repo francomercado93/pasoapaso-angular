@@ -4,7 +4,7 @@ import { delay } from 'rxjs/operators';
 import Speech from 'speak-tts';
 import { Instruccion } from 'src/app/domain/instruccion';
 import { RutaService } from 'src/app/services/ruta.service';
-import { Ruta } from '../busqueda.component';
+import { Ruta } from 'src/app/domain/ruta';
 
 @Component({
   selector: 'ruta',

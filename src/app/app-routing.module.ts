@@ -6,6 +6,7 @@ import { BusquedaComponent } from './components/ruta/busqueda.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 import { BusquedaNvComponent } from './components/ruta/busquedanv/busquedanv.component';
+import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'app-locacion', component: LocacionComponent },
   { path: 'app-notificacion', component: NotificacionComponent },
   { path: 'ruta/:id', component: SeguirrutaComponent },
+  { path: 'app-rutavidente/:id', component: RutavidenteComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' }, // redirect to `BusquedaComponent`
   { path: '**', component: NotFoundComponent } // Wildcard route for a 404 page
 ];

@@ -12,8 +12,37 @@
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
             fixedTopGap="56">
             <mat-nav-list>
-                <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.path">{{item.label}}</a>
+                <a mat-list-item routerLink="app-locacion">
+                    <mat-icon mat-list-icon>login</mat-icon>Iniciar Sesion
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-list-item routerLink="app-notificacion">
+                    <mat-icon mat-list-icon>account_circle</mat-icon> Registrarse
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-list-item routerLink="app-busquedanv">
+                    <mat-icon mat-list-icon>hearing</mat-icon> Buscar Ruta No Vidente
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-list-item routerLink="crear-ruta">
+                    <mat-icon mat-list-icon>maps-ugc</mat-icon> Crear ruta
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-list-item routerLink="app-locacion">
+                    <mat-icon mat-list-icon>location_on</mat-icon> Crear locacion
+                </a>
+                <mat-divider></mat-divider>
             </mat-nav-list>
+            <!--
+            <mat-nav-list *ngIf="usuarioLogueado; else usuarioAnonimo">
+                <a mat-list-item *ngFor="let item of menuItemsUsuario" [routerLink]="item.path">{{item.label}}</a>
+            </mat-nav-list>
+            <ng-template #usuarioAnonimo>
+                <mat-nav-list>
+                    <a mat-list-item *ngFor="let item of menuItemsAnonimo" [routerLink]="item.path">{{item.label}}</a>
+                </mat-nav-list>
+            </ng-template>
+            -->
         </mat-sidenav>
         <router-outlet></router-outlet>
     </mat-sidenav-container>

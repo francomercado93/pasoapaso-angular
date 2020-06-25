@@ -1,0 +1,56 @@
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">Seguir Ruta</span>
+</mat-toolbar>
+<div class="container">
+    <button mat-raised-button class="button" fxFlexFill (click)="iniciarRuta = !iniciarRuta"
+        id="toggle-linear">{{!iniciarRuta ? 'Mostrar Ruta' : 'Esconder Ruta'}}</button>
+</div>
+<!--
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+-->
+<mat-vertical-stepper *ngIf=iniciarRuta [linear]="isLinear" #stepper>
+    <mat-step *ngFor="let instruccion of instrucciones; let i = index" [stepControl]="instruccion">
+        <ng-template matStepLabel>Instrucción {{i + 1}}</ng-template>
+        <mat-label><b>{{instruccion.descripcion}}</b></mat-label>
+        <div>
+            <button mat-button matStepperPrevious color="primary" class="button" *ngIf="i != 0">Anterior</button>
+            <button mat-button matStepperNext color="primary" class="button">Siguiente</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Finalizado.</ng-template>
+        <p><b>Terminaste el recorrido.</b></p>
+        <div>
+            <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" (click)="openSnackBar('Se agrego a Favoritos!', 'Cerrar')">
+                <mat-icon>favorite</mat-icon>
+            </button>
+            <mat-label style="color: blue;"><b>Agregar a Favoritos</b></mat-label>
+            <!--<button mat-button matStepperPrevious color="primary" class="button">Agregar a Favoritos</button>-->
+            <!--<button mat-button (click)="stepper.reset()" color="primary" class="button">Reiniciar</button>-->
+        </div>
+    </mat-step>
+</mat-vertical-stepper>
+<div class="container">
+    <button mat-raised-button class="button" fxFlexFill>Abandonar Ruta</button>
+    <button mat-raised-button class="button" fxFlexFill>Me perdí</button>
+    <button mat-raised-button class="button" fxFlexFill color="warn">Reportar Ruta</button>
+</div>
+<!--
+    <mat-step [stepControl]="0">
+            <ng-template matStepLabel>Instrucción 1</ng-template>
+            <mat-label><b>{{ instrucciones[0].tipoInstruccion }} + 20</b></mat-label>
+            <div>
+                <button mat-button matStepperNext color="primary" class="button">Siguiente</button>
+            </div>
+    </mat-step>
+    <mat-step [stepControl]="i" *ngFor="let instruccion of instrucciones; let i = index">
+            <ng-template matStepLabel>Instrucción {{i + 1}}</ng-template>
+            <mat-label><b>{{instruccion.tipoInstruccion}}</b></mat-label>
+            <div>
+                <button mat-button matStepperPrevious color="primary" class="button">Anterior</button>
+                <button mat-button matStepperNext color="primary" class="button">Siguiente</button>
+            </div>
+    </mat-step>
+    -->

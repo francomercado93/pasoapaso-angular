@@ -14,13 +14,20 @@ import { BusquedaNvComponent } from '../ruta/busquedanv/busquedanv.component';
 
 export class SidenavResponsiveExample implements OnDestroy {
   mobileQuery: MediaQueryList;
+  usuarioLogueado: boolean = false;
 
-  menuItems = [
+  /*
+  menuItemsAnonimo = [
     { path: '', component: BusquedaComponent, label: 'Buscar Ruta' },
     { path: 'app-locacion', component: LocacionComponent, label: 'Iniciar Sesion' },
-    { path: 'app-notificacion', component: NotificacionComponent, label: 'Registrarse' },
-    { path: 'app-busquedanv', component: BusquedaNvComponent, label: 'Buscar Ruta No Vidente' },
+    { path: 'app-notificacion', component: NotificacionComponent, label: 'Registrarse' }
   ];
+
+  menuItemsUsuario  = [
+    { path: '', component: BusquedaComponent, label: 'Buscar Ruta' },
+    { path: 'app-busquedanv', component: BusquedaNvComponent, label: 'Buscar Ruta No Vidente' }
+  ];
+  */
 
   private _mobileQueryListener: () => void;
 

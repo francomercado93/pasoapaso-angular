@@ -3,14 +3,14 @@ import { Ruta } from '../domain/ruta';
 import { Instruccion } from '../domain/instruccion';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from '../configuration/baseUrl';
+import { TipoInstruccion } from '../domain/tipoInstruccion';
 
 export interface IRutaService {
-
   getRutasLocacion(idLocacion: number): Promise<any>
   crearNuevaRuta(ruta: Ruta): Promise<any>
   getRutaById(idRuta: number): Promise<any>
   getInstruccionesRuta(idRuta: number): Promise<any>
-
+  getTiposInstrucciones(): Promise<any>
 }
 
 @Injectable({
@@ -26,9 +26,20 @@ export class RutaService implements IRutaService {
     return res
   }
 
-  crearNuevaRuta(ruta: Ruta): Promise<any> {
-    // return this.httpClient.get<Array<Ruta>>(`${baseUrl}/mascotas`);
-    throw new Error("Method not implemented.");
+  async crearNuevaRuta(ruta: Ruta): Promise<any> {
+    const nuevaRutaId = await this.httpClient.post<Ruta>(`${baseUrl}/rutas`, ruta).toPromise()
+    this.crearNuevasInstrucciones(nuevaRutaId, ruta.instrucciones)
+    return nuevaRutaId
+  }
+
+  crearNuevasInstrucciones(nuevaRutaId: any, instrucciones: Instruccion[]) {
+    instrucciones.forEach(instruccion => {
+      this.insertInstruccion(instruccion, nuevaRutaId)
+    })
+  }
+
+  async insertInstruccion(instruccion: Instruccion, nuevaRutaId: number) {
+    return this.httpClient.post<Instruccion>(`${baseUrl}/instrucciones/${nuevaRutaId}`, instruccion).toPromise()
   }
 
   async getRutasLocacion(idLocacion: number): Promise<any> {
@@ -38,9 +49,11 @@ export class RutaService implements IRutaService {
 
   async getRutaById(idRuta: number): Promise<any> {
     const res = this.httpClient.get<Ruta>(`${baseUrl}/rutas/${idRuta}`).toPromise()
-    console.log("Ruta")
-    console.log(res)
     return res
+  }
+
+  async getTiposInstrucciones(): Promise<any> {
+    return this.httpClient.get<TipoInstruccion>(`${baseUrl}/tipos-instrucciones`).toPromise()
   }
 }
 
