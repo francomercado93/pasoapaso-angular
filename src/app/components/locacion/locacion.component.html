@@ -40,7 +40,7 @@
     <mat-form-field>
         <mat-label>Provincia</mat-label>
         <mat-select formControlName="provinciaInstitucion" id="provinciaInstitucion">
-            <mat-option *ngFor="let provincia of provincias" [value]="provincia.id_provincia">
+            <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
                 {{provincia.nombre}}
             </mat-option>
         </mat-select>

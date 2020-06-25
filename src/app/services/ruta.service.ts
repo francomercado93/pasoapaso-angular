@@ -38,7 +38,7 @@ export class RutaService implements IRutaService {
     })
   }
 
-  async insertInstruccion(instruccion: Instruccion, nuevaRutaId: number) {
+  insertInstruccion(instruccion: Instruccion, nuevaRutaId: number) {
     return this.httpClient.post<Instruccion>(`${baseUrl}/instrucciones/${nuevaRutaId}`, instruccion).toPromise()
   }
 

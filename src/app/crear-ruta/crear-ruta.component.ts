@@ -57,6 +57,7 @@ export class CrearRutaComponent implements OnInit {
     return this.fb.group({
       id: [this.cantidadInstrucciones],
       idRuta: [''],
+      numeroInstruccion: this.cantidadInstrucciones,
       tipoInstruccion: ['', [Validators.required]],
       cantidad: ['', [Validators.min(0), Validators.required]]
     })

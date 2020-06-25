@@ -118,6 +118,8 @@ export class BusquedaNvComponent implements OnInit {
       case 1:
         this.locacionSeleccionada = this.locaciones[this.i]
         this.rutas = await this.rutaService.getRutasLocacion(this.locacionSeleccionada.id)
+        console.log("i" + this.i)
+        console.log(this.rutas)
         if (this.rutas == null || this.rutas.length == 0) {
           this.leerInstruccion("La locación seleccionada no tiene rutas cargadas")
           await delay(3000)
@@ -133,9 +135,9 @@ export class BusquedaNvComponent implements OnInit {
           await delay(3000)
           this.leerInstruccion("Seleccione una ruta")
           await delay(3000)
+          this.i = 0
           this.leerInstruccion(this.rutas[this.i].nombre)
           this.j++
-          this.i = 0
         }
         break
       case 2:
@@ -178,7 +180,7 @@ export class BusquedaNvComponent implements OnInit {
     this.deshabilitado = true
     this.texto = instruccion
     if (instruccion.length > 30) {
-      this.speech.setRate(1.3)
+      this.speech.setRate(1.2)
     }
     this.speech
       .speak({

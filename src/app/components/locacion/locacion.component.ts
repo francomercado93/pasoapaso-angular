@@ -46,7 +46,9 @@ export class LocacionComponent {
     locacion.tipoLocacion = this.form.get('tipoInstitucion').value
     locacion.esPublica = false
     locacion.usuario = 'emiravenna@gmail.com'
-
+    // console.log(locacion.esPublica)
+    console.log(locacion.tipoLocacion)
+    console.log(locacion.provincia)
     this.contador++
 
     const res = await this.locacionService.crearLocacion(locacion)
