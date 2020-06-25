@@ -1,0 +1,81 @@
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">Crear ruta</span>
+</mat-toolbar>
+<form [formGroup]="rutaForm" (ngSubmit)="onSubmit()">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <div fxFlex="20" class="row">
+            <h3>Por favor complete la ruta</h3>
+        </div>
+        <div fxFlex="20">
+            <mat-form-field appearance="outline" class="row">
+                <mat-label>Nombre ruta</mat-label>
+                <input matInput placeholder="Ingrese un nombre de ruta" formControlName="nombre">
+                <mat-error *ngIf="'required'">El nombre es obligatorio</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="20">
+            <mat-form-field appearance="outline" class="row">
+                <mat-label>Institución</mat-label>
+                <mat-select formControlName="locacion">
+                    <mat-option *ngFor="let loc of locaciones" [value]="loc.nombre">{{loc.nombre}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="'required'">Debe seleccionar un tipo</mat-error>
+                <mat-hint align="end">Elija una opción de la lista</mat-hint>
+            </mat-form-field>
+        </div>
+        <div fxFlex="30">
+            <mat-form-field appearance="outline" class="row">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput formControlName="descripcion"></textarea>
+            </mat-form-field>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxFlex="20" formArrayName="instrucciones"
+            *ngFor="let instruccion of instrucciones.controls; let i = index">
+            <div fxLayout="row" [formGroupName]="i" class="row">
+                <div fxFlex="25" style="align-self: center;">
+                    <h3>Paso {{i + 1}}</h3>
+                </div>
+                <div fxFlex="30">
+                    <mat-form-field appearance="outline" class="input-paso">
+                        <mat-label>Tipo instrucción</mat-label>
+                        <mat-select formControlName="tipoInstruccion">
+                            <mat-option *ngFor="let tipoInst of tiposInstrucciones" [value]="tipoInst.nombre">
+                                {{tipoInst.nombre}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="'required'">Campo obligatorio</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="30">
+                    <mat-form-field appearance="outline" class="input-paso">
+                        <mat-label>Cantidad</mat-label>
+                        <input type="number" matInput placeholder="Ingrese una cantidad" formControlName="cantidad">
+                        <mat-error *ngIf="'min'">Ingrese una cantidad valida</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="5">
+                    <button mat-mini-fab color="warn" type="button" class="button-eliminar"
+                        (click)="eliminarInstruccion(i)" [disabled]="cantidadInstrucciones==1">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <div fxFlex="20" style="align-self: flex-end;">
+            <button mat-stroked-button color="primary" (click)="agregarInstruccion()" type="button"
+                class="button-paso">+Paso</button>
+        </div>
+        <div fxFlex="20" class="row-button">
+            <button mat-raised-button color="accent" type="button" (click)="reset()" class="buttons"
+                [disabled]="rutaForm.pristine || rutaForm.untouched">Restaurar campos</button>
+            <button mat-raised-button color="primary" type="submit" class="buttons"
+                [disabled]="!rutaForm.valid || rutaForm.pristine || rutaForm.untouched" autofocus>Guardar</button>
+        </div>
+        <div fxFlex="20" class="row">
+            <p>Instrucciones:</p>
+            <p>Aquí puede crear una ruta privada</p>
+        </div>
+    </div>
+</form>

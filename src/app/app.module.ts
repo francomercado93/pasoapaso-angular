@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 //Flex-Layout
 import { FlexLayoutModule } from '@angular/flex-layout';
 //Reactive Form
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -58,16 +58,12 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { BusquedaComponent } from './components/ruta/busqueda.component';
 import { BusquedaNvComponent } from './components/ruta/busquedanv/busquedanv.component';
+import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.component';
 import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 import { SidenavResponsiveExample } from './components/sidenav/sidenav.component';
+import { CrearRutaComponent } from './crear-ruta/crear-ruta.component';
 //Material
 import { Material } from './material.module';
-import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.component';
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -79,7 +75,8 @@ import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.
     NotFoundComponent,
     BusquedaNvComponent,
     SeguirrutaComponent,
-    RutavidenteComponent
+    RutavidenteComponent,
+    CrearRutaComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +84,7 @@ import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.
     BrowserAnimationsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     Material
   ],

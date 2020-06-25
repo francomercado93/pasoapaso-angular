@@ -23,6 +23,7 @@ export class LocacionComponent {
     console.log(this.provincias)
   }
 
+  // TODO: agregar validators
   constructor(private locacionService: LocacionService) { }
 
   form = new FormGroup({

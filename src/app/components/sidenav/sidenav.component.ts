@@ -4,6 +4,7 @@ import { LocacionComponent } from '../locacion/locacion.component';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { BusquedaComponent } from '../ruta/busqueda.component';
 import { BusquedaNvComponent } from '../ruta/busquedanv/busquedanv.component';
+import { CrearRutaComponent } from 'src/app/crear-ruta/crear-ruta.component';
 
 /** @title Responsive sidenav */
 @Component({
@@ -15,19 +16,6 @@ import { BusquedaNvComponent } from '../ruta/busquedanv/busquedanv.component';
 export class SidenavResponsiveExample implements OnDestroy {
   mobileQuery: MediaQueryList;
   usuarioLogueado: boolean = false;
-
-  /*
-  menuItemsAnonimo = [
-    { path: '', component: BusquedaComponent, label: 'Buscar Ruta' },
-    { path: 'app-locacion', component: LocacionComponent, label: 'Iniciar Sesion' },
-    { path: 'app-notificacion', component: NotificacionComponent, label: 'Registrarse' }
-  ];
-
-  menuItemsUsuario  = [
-    { path: '', component: BusquedaComponent, label: 'Buscar Ruta' },
-    { path: 'app-busquedanv', component: BusquedaNvComponent, label: 'Buscar Ruta No Vidente' }
-  ];
-  */
 
   private _mobileQueryListener: () => void;
 

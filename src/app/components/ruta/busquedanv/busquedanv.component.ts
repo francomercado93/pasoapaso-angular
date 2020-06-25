@@ -30,13 +30,17 @@ export class BusquedaNvComponent implements OnInit {
   constructor(private locacionService: LocacionService, private rutaService: RutaService, private route: Router) { }
 
   async ngOnInit() {
-    this.speech = new Speech()
-    this.categorias = await this.locacionService.getCategorias()
-    this.inicializarVoz()
-    await delay(3000)
-    this.leerInstruccion("Seleccione una categoría")
-    await delay(3000)
-    this.leerInstruccion(this.categorias[this.i].nombre)
+    try {
+      this.speech = new Speech()
+      this.categorias = await this.locacionService.getCategorias()
+      this.inicializarVoz()
+      await delay(3000)
+      this.leerInstruccion("Seleccione una categoría")
+      await delay(3000)
+      this.leerInstruccion(this.categorias[this.i].nombre)
+    } catch (e) {
+      console.log("Error" + e)
+    }
   }
 
   siguienteOpcion() {
