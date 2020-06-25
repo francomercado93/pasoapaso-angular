@@ -1,7 +1,9 @@
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">Crear ruta</span>
+</mat-toolbar>
 <form [formGroup]="rutaForm" (ngSubmit)="onSubmit()">
     <div fxLayout="column" fxLayoutAlign="center stretch">
         <div fxFlex="20" class="row">
-            <h1>Crear ruta</h1>
             <h3>Por favor complete la ruta</h3>
         </div>
         <div fxFlex="20">
@@ -53,7 +55,7 @@
                     </mat-form-field>
                 </div>
                 <div fxFlex="5">
-                    <button mat-mini-fab color="primary" type="button" class="button-eliminar"
+                    <button mat-mini-fab color="warn" type="button" class="button-eliminar"
                         (click)="eliminarInstruccion(i)" [disabled]="cantidadInstrucciones==1">
                         <mat-icon>clear</mat-icon>
                     </button>
