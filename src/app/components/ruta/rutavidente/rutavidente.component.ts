@@ -19,6 +19,7 @@ export class RutavidenteComponent implements OnInit {
   async ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.instrucciones = await this.rutaService.getInstruccionesRuta(id);
+    this.instrucciones = this.instrucciones.sort(inst => inst.numeroInstruccion)
     this.descripcionInstruccion();
   }
 

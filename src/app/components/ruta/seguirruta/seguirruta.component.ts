@@ -28,6 +28,8 @@ export class SeguirrutaComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.ruta = await this.rutaService.getRutaById(id)
     this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
+    this.instrucciones = this.instrucciones.sort(inst => inst.numeroInstruccion)
+    console.log(this.instrucciones)
     this.inicializarVoz()
     await delay(2000)
     this.leerInstruccion("Seguir ruta " + this.ruta.nombre)
