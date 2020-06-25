@@ -4,7 +4,7 @@
 <div class="flex-container" *ngIf="categorias == null || categorias.length == 0">
   <mat-spinner></mat-spinner>
 </div>
-<div class="container animate__animated animate__fadeIn">
+<div class="container animate__animated animate__fadeIn" *ngIf="categorias != null || categorias.length > 0">
   <mat-grid-list cols="1" rowHeight="2:1">
     <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'#E8F8F5'">
       <button mat-button (click)="siguienteOpcion()" class="boton" [disabled]="deshabilitado">Siguiente</button>

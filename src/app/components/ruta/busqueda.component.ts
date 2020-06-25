@@ -44,7 +44,9 @@ export class BusquedaComponent implements OnInit {
   async cargarRutas() {
     console.log(this.formGroup.get('ruta').value)
     if (this.formGroup.controls['locacion'].valid) {
+      console.log(this.formGroup.get('locacion').value.id)
       this.cargaRutas = await this.rutaService.getRutasLocacion(this.formGroup.get('locacion').value.id)
+      console.log(this.cargaRutas)
     }
     this.mostrarRutas();
   }
@@ -94,9 +96,9 @@ export class BusquedaComponent implements OnInit {
     });
   }
 
-  onSubmit(post: any) {
-    this.post = post;
-    this.rutaSeleccionada = this.post.ruta;
-    this.route.navigate(['/app-rutavidente', this.rutaSeleccionada.id]);
+  onSubmit() {
+    const idRuta = this.formGroup.get('ruta').value.id
+    console.log(idRuta)
+    this.route.navigate(['/app-rutavidente', idRuta]);
   }
 }

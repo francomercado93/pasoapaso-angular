@@ -72,7 +72,7 @@ export class CrearRutaComponent implements OnInit {
       await this.rutaService.crearNuevaRuta(this.rutaForm.value)
       this.openSnackBar()
       // Redirigir a administrar locaciones
-      this.route.navigate(['/app-busquedanv'])
+      this.route.navigate(['/'])
     } catch (e) {
       console.log(e)
     }
