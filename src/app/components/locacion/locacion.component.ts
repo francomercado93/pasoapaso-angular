@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { LocacionService } from 'src/app/services/locacion.service';
 import { Locacion } from 'src/app/domain/locacion';
 import { Categoria } from 'src/app/domain/categoria';
 import { Provincia } from 'src/app/domain/provincia';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-locacion',
@@ -15,44 +17,55 @@ export class LocacionComponent {
 
   categorias: Categoria[] = new Array
   provincias: Provincia[] = new Array
-
-  async ngOnInit() {
-    this.categorias = await this.locacionService.getCategorias()
-    console.log(this.categorias)
-    this.provincias = await this.locacionService.getProvincias()
-    console.log(this.provincias)
-  }
-
-  // TODO: agregar validators
-  constructor(private locacionService: LocacionService) { }
-
-  form = new FormGroup({
-    nombreInstitucion: new FormControl(),
-    tipoInstitucion: new FormControl(),
-    direccionInstitucion: new FormControl(),
-    ciudadInstitucion: new FormControl(),
-    provinciaInstitucion: new FormControl()
-  });
-
+  form: FormGroup
   contador: number = 10
 
-  async crear_locacion() {
-    const locacion = new Locacion()
-    locacion.id = this.contador
-    locacion.nombre = this.form.get('nombreInstitucion').value
-    locacion.direccion = this.form.get('direccionInstitucion').value
-    locacion.ciudad = this.form.get('ciudadInstitucion').value
-    locacion.provincia = this.form.get('provinciaInstitucion').value
-    locacion.tipoLocacion = this.form.get('tipoInstitucion').value
-    locacion.esPublica = false
-    locacion.usuario = 'emiravenna@gmail.com'
-    // console.log(locacion.esPublica)
-    console.log(locacion.tipoLocacion)
-    console.log(locacion.provincia)
-    this.contador++
+  constructor(private locacionService: LocacionService, private fb: FormBuilder, private snackBar: MatSnackBar, private route: Router) { }
 
-    const res = await this.locacionService.crearLocacion(locacion)
-    console.log(res)
-    return res
+  async ngOnInit() {
+    try {
+      this.setValidators()
+      this.categorias = await this.locacionService.getCategorias()
+      this.categorias = this.categorias.filter(cat => cat.nombre != "Favoritos")
+      console.log(this.categorias)
+      this.provincias = await this.locacionService.getProvincias()
+      console.log(this.provincias)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  setValidators() {
+    this.form = this.fb.group({
+      id: [''],
+      nombre: ['', [Validators.required]],
+      direccion: ['', [Validators.required]],
+      ciudad: ['', [Validators.required]],
+      provincia: ['', [Validators.required]],
+      tipoLocacion: ['', [Validators.required]],
+      esPublica: false,
+      usuario: ['emiravenna@gmail.com']
+    });
+  }
+
+  async onSubmit() {
+    try {
+      // this.contador++
+      await this.locacionService.crearLocacion(this.form.value)
+      this.route.navigate(['/administrar-locaciones'])
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  reset() {
+    this.form.reset()
+    this.setValidators()
+  }
+
+  openSnackBar() {
+    this.snackBar.open('Nueva locacion creada!', "Ok", {
+      duration: 3000,
+    })
   }
 }

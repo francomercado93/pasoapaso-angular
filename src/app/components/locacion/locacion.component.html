@@ -1,58 +1,67 @@
-<h1>Crear Locación</h1>
+<div class="animate__animated animate__fadeInDown">
+    <h1>Crear Locación</h1>
 
-<h3>Por favor ingrese los datos de la locación</h3>
+    <h3>Por favor ingrese los datos de la locación</h3>
 
-<form [formGroup]="form" (ngSubmit)="crear_locacion()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <mat-form-field class="example-full-width">
-        <mat-label>Nombre de la institución</mat-label>
-        <input matInput formControlName="nombreInstitucion" id="nombreInstitucion"
-            placeholder="Nombre de la institución">
-    </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Nombre de la institución</mat-label>
+            <input matInput formControlName="nombre" id="nombreInstitucion" placeholder="Nombre de la institución">
+            <mat-error *ngIf="'required'">El nombre es obligatorio</mat-error>
+        </mat-form-field>
 
-    <br>
+        <br>
 
-    <mat-form-field>
-        <mat-label>Tipo de institución</mat-label>
-        <mat-select formControlName="tipoInstitucion" id="tipoInstitucion">
-            <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
-                {{categoria.nombre}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+            <mat-label>Tipo de institución</mat-label>
+            <mat-select formControlName="tipoLocacion" id="tipoLocacion">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                    {{categoria.nombre}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="'required'">Debe seleccionar un tipo de locación</mat-error>
+        </mat-form-field>
 
-    <br>
+        <br>
 
-    <mat-form-field class="example-full-width">
-        <mat-label>Dirección</mat-label>
-        <input formControlName="direccionInstitucion" id="direccionInstitucion" matInput placeholder="Dirección">
-    </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Dirección</mat-label>
+            <input formControlName="direccion" id="direccion" matInput placeholder="Dirección">
+            <mat-error *ngIf="'required'">Direccion es obligatoria</mat-error>
+        </mat-form-field>
 
-    <br>
+        <br>
 
-    <mat-form-field class="example-full-width">
-        <mat-label>Ciudad</mat-label>
-        <input matInput formControlName="ciudadInstitucion" id="ciudadInstitucion" placeholder="Ciudad">
-    </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Ciudad</mat-label>
+            <input matInput formControlName="ciudad" id="ciudad" placeholder="Ciudad">
+            <mat-error *ngIf="'required'">Este campo es obligatorio</mat-error>
+        </mat-form-field>
 
-    <br>
+        <br>
 
-    <mat-form-field>
-        <mat-label>Provincia</mat-label>
-        <mat-select formControlName="provinciaInstitucion" id="provinciaInstitucion">
-            <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
-                {{provincia.nombre}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+            <mat-label>Provincia</mat-label>
+            <mat-select formControlName="provincia" id="provincia">
+                <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
+                    {{provincia.nombre}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="'required'">Debe seleccionar una provincia</mat-error>
+        </mat-form-field>
 
-    <br>
+        <br>
 
-    <button mat-flat-button color="warn">Cancelar</button>
-    <button mat-flat-button color="primary" type="submit">Guardar</button>
+        <button mat-flat-button color="warn" (click)="reset()" [disabled]="form.pristine || form.untouched"
+            type="button">Restaurar
+            formulario</button>
+        <button mat-flat-button color="primary" type="submit"
+            [disabled]="!form.valid || form.pristine || form.untouched" autofocus>Guardar</button>
 
-</form>
+    </form>
 
-<h3>Instrucciónes:</h3>
-<h4>Todas las locaciones se crean como privadas</h4>
-<h4>Una vez que se agreguen rutas a la misma podrá proponer su publicación</h4>
+    <h3>Instrucciónes:</h3>
+    <h4>Todas las locaciones se crean como privadas</h4>
+    <h4>Una vez que se agreguen rutas a la misma podrá proponer su publicación</h4>
+</div>

@@ -22,7 +22,6 @@ export class LocacionService implements ILocacionService {
 
   constructor(private httpClient: HttpClient) { }
 
-
   async crearLocacion(locacion: Locacion): Promise<any> {
     const res = this.httpClient.post(`${baseUrl}/crearlocacion`, locacion).toPromise()
     return res
@@ -46,6 +45,10 @@ export class LocacionService implements ILocacionService {
   async getProvincias(): Promise<any> {
     const res = await this.httpClient.get<Array<Provincia>>(`${baseUrl}/provincias`).toPromise()
     return res
+  }
+
+  async getLocacionesUsuario(usuario: string): Promise<any> {
+    return this.httpClient.get<Array<Locacion>>(`${baseUrl}/locaciones-usuario/${usuario}`).toPromise()
   }
 
 }

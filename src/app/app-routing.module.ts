@@ -8,11 +8,13 @@ import { BusquedaNvComponent } from './components/ruta/busquedanv/busquedanv.com
 import { RutavidenteComponent } from './components/ruta/rutavidente/rutavidente.component';
 import { SeguirrutaComponent } from './components/ruta/seguirruta/seguirruta.component';
 import { CrearRutaComponent } from './crear-ruta/crear-ruta.component';
+import { AdministrarLocacionesComponent } from './components/administrar-locaciones/administrar-locaciones.component';
 
 const routes: Routes = [
   { path: '', component: BusquedaComponent },
   { path: 'app-busquedanv', component: BusquedaNvComponent },
-  { path: 'app-locacion', component: LocacionComponent },
+  { path: 'administrar-locaciones', component: AdministrarLocacionesComponent },
+  { path: 'crear-locacion', component: LocacionComponent },
   { path: 'app-notificacion', component: NotificacionComponent },
   { path: 'ruta/:id', component: SeguirrutaComponent },
   { path: 'app-rutavidente/:id', component: RutavidenteComponent },

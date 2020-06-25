@@ -79,7 +79,6 @@ export class CrearRutaComponent implements OnInit {
   }
 
   reset() {
-    console.log(this.rutaForm.value)
     this.rutaForm.reset()
     this.setValidators()
     // this.rutaForm.markAsUntouched()
