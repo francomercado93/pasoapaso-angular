@@ -24,15 +24,27 @@ export class SeguirrutaComponent implements OnInit {
   constructor(private route: ActivatedRoute, private rutaService: RutaService) { }
 
   async ngOnInit() {
-    this.speech = new Speech()
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.ruta = await this.rutaService.getRutaById(id)
-    this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
-    this.instrucciones = this.instrucciones.sort(inst => inst.numeroInstruccion)
-    console.log(this.instrucciones)
-    this.inicializarVoz()
-    await delay(2000)
-    this.leerInstruccion("Seguir ruta " + this.ruta.nombre)
+    try {
+      this.speech = new Speech()
+      const id = +this.route.snapshot.paramMap.get('id');
+      this.ruta = await this.rutaService.getRutaById(id)
+      this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
+      this.instrucciones = this.instrucciones.sort(inst => inst.numeroInstruccion)
+      await delay(1000)
+      this.inicializarVoz()
+      this.leerInstruccionesPrincipales()
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  async leerInstruccionesPrincipales() {
+    await delay(3000)
+    this.leerInstruccion("Pantalla de seguir ruta " + this.ruta.nombre)
+    await delay(3000)
+    this.leerInstruccion("La pantalla consta de los siguientes botones: siguiente en la parte superior, me perdí en el medio y abandonar ruta en la parte inferior ")
+    await delay(3000)
+    this.leerInstruccion("Toque la parte superior de la pantalla para iniciar la ruta")
   }
 
   get textButton(): String {
@@ -40,26 +52,34 @@ export class SeguirrutaComponent implements OnInit {
   }
 
   inicializarVoz() {
-    this.speech
-      .init({
-        volume: 0.5,
-        lang: "es-ES",
-        rate: 0.9,
-        'voice': 'Google español',
-        'splitSentences': false
-      })
-      .then(data => {
-        console.log(data)
-      })
-      .catch(e => {
-        console.error("El siguiente error se produjo al inicializarse: ", e);
-      });
+    try {
+      this.speech
+        .init({
+          volume: 0.5,
+          lang: "es-ES",
+          rate: 1,
+          'voice': 'Google español',
+          'splitSentences': false
+        })
+        .then(data => {
+          console.log(data)
+        })
+        .catch(e => {
+          console.error("El siguiente error se produjo al inicializarse: ", e);
+        });
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   leerInstruccion(instruccion: string) {
     this.deshabilitado = true
+    console.log(this.deshabilitado)
     if (instruccion.length > 30) {
-      this.speech.setRate(1.3)
+      this.speech.setRate(1.2)
+    }
+    else {
+      this.speech.setRate(1)
     }
     this.speech
       .speak({
@@ -71,6 +91,7 @@ export class SeguirrutaComponent implements OnInit {
           },
           onend: () => {
             console.log("Termino")
+
           },
           onresume: () => {
             console.log("Resumen")
@@ -94,7 +115,7 @@ export class SeguirrutaComponent implements OnInit {
       });
   }
 
-  siguienteOpcion() {
+  async siguienteOpcion() {
     if (this.inicio) {
       this.inicio = false
     }
@@ -119,6 +140,12 @@ export class SeguirrutaComponent implements OnInit {
       this.i++;
       if (this.i >= this.instrucciones.length) {
         this.leerInstruccion("A llegado a su destino")
+        await delay(3000)
+        this.leerInstruccion("Toque la parte superior de la pantalla para agregar la ruta a favoritos")
+        await delay(3000)
+        this.leerInstruccion("Toque la parte del medio de la pantalla para buscar una nueva ruta")
+        await delay(3000)
+        this.leerInstruccion("Toque la parte inferior de la pantalla para invertir la ruta")
       }
     }
   }

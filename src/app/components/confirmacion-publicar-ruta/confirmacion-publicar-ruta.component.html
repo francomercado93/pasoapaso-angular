@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>Confirmar</h1>
+<div mat-dialog-content>¿Está seguro que desea publicar la ruta?</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="publicar()">Publicar</button>
+</div>

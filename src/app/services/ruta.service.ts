@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Ruta } from '../domain/ruta';
 import { Instruccion } from '../domain/instruccion';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { baseUrl } from '../configuration/baseUrl';
 import { TipoInstruccion } from '../domain/tipoInstruccion';
+import { Usuario } from '../domain/usuario';
 
 export interface IRutaService {
   getRutasLocacion(idLocacion: number): Promise<any>
@@ -26,6 +27,15 @@ export class RutaService implements IRutaService {
     return res
   }
 
+  async getRutasUsuario(usuario: string): Promise<any> {
+    return this.httpClient.get<Ruta>(`${baseUrl}/rutas-usuario/${usuario}`).toPromise()
+  }
+
+  async publicarRuta(ruta: Ruta): Promise<any> {
+    const res = this.httpClient.put(`${baseUrl}/publicar-ruta/${ruta.id}`, ruta).toPromise()
+    return res
+  }
+
   async crearNuevaRuta(ruta: Ruta): Promise<any> {
     const nuevaRutaId = await this.httpClient.post<Ruta>(`${baseUrl}/rutas`, ruta).toPromise()
     this.crearNuevasInstrucciones(nuevaRutaId, ruta.instrucciones)
@@ -33,13 +43,14 @@ export class RutaService implements IRutaService {
   }
 
   crearNuevasInstrucciones(nuevaRutaId: any, instrucciones: Instruccion[]) {
+    console.log("Insert instrucciones" + new Date())
     instrucciones.forEach(instruccion => {
       this.insertInstruccion(instruccion, nuevaRutaId)
     })
   }
 
   insertInstruccion(instruccion: Instruccion, nuevaRutaId: number) {
-    return this.httpClient.post<Instruccion>(`${baseUrl}/instrucciones/${nuevaRutaId}`, instruccion).toPromise()
+    return this.httpClient.post(`${baseUrl}/instrucciones/${nuevaRutaId}`, instruccion).toPromise()
   }
 
   async getRutasLocacion(idLocacion: number): Promise<any> {

@@ -6,7 +6,6 @@ import { Locacion } from 'src/app/domain/locacion';
 import { Ruta } from 'src/app/domain/ruta';
 import { LocacionService } from 'src/app/services/locacion.service';
 import { RutaService } from 'src/app/services/ruta.service';
-import { Usuario } from 'src/app/domain/usuario';
 
 @Component({
   selector: 'app-busquedanv',
@@ -34,6 +33,10 @@ export class BusquedaNvComponent implements OnInit {
       this.speech = new Speech()
       this.categorias = await this.locacionService.getCategorias()
       this.inicializarVoz()
+      await delay(3000)
+      this.leerInstruccion("Pantalla de búsqueda para personas no videntes")
+      await delay(3000)
+      this.leerInstruccion("La pantalla consta de los siguientes botones: siguiente en la parte superior, anterior en el medio y ok en la parte inferior")
       await delay(3000)
       this.leerInstruccion("Seleccione una categoría")
       await delay(3000)
@@ -160,9 +163,9 @@ export class BusquedaNvComponent implements OnInit {
   inicializarVoz() {
     this.speech
       .init({
-        volume: 0.5,
-        lang: "es-ES",
-        rate: 1,
+        'volume': 0.5,
+        'lang': 'es-ES',
+        'rate': 1,
         'voice': 'Google español',
         'splitSentences': false
       })
@@ -173,14 +176,17 @@ export class BusquedaNvComponent implements OnInit {
       .catch(e => {
         console.error("El siguiente error se produjo al inicializarse: ", e);
       });
-
   }
 
   leerInstruccion(instruccion: string) {
     this.deshabilitado = true
+    console.log(this.deshabilitado)
     this.texto = instruccion
     if (instruccion.length > 30) {
-      this.speech.setRate(1.2)
+      this.speech.setRate(1.1)
+    }
+    else {
+      this.speech.setRate(1)
     }
     this.speech
       .speak({

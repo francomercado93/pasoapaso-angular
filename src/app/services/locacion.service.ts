@@ -4,6 +4,7 @@ import { baseUrl } from '../configuration/baseUrl';
 import { Categoria } from '../domain/categoria';
 import { Locacion } from '../domain/locacion';
 import { Provincia } from '../domain/provincia';
+import { Ruta } from '../domain/ruta';
 
 export interface ILocacionService {
   getLocaciones(): Promise<any>

@@ -20,6 +20,8 @@ import { CrearRutaComponent } from './crear-ruta/crear-ruta.component';
 //Material
 import { Material } from './material.module';
 import { AdministrarLocacionesComponent } from './components/administrar-locaciones/administrar-locaciones.component';
+import { AdministrarRutasComponent } from './components/administrar-rutas/administrar-rutas.component';
+import { ConfirmacionPublicarRutaComponent } from './components/confirmacion-publicar-ruta/confirmacion-publicar-ruta.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { AdministrarLocacionesComponent } from './components/administrar-locacio
     SeguirrutaComponent,
     RutavidenteComponent,
     CrearRutaComponent,
-    AdministrarLocacionesComponent
+    AdministrarLocacionesComponent,
+    AdministrarRutasComponent,
+    ConfirmacionPublicarRutaComponent
   ],
   imports: [
     BrowserModule,

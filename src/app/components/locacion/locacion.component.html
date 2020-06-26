@@ -1,64 +1,65 @@
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">Crear Locación</span>
+</mat-toolbar>
 <div class="animate__animated animate__fadeInDown">
-    <h1>Crear Locación</h1>
 
+    <!-- <div fxFlex="20"> -->
     <h3>Por favor ingrese los datos de la locación</h3>
-
+    <!-- </div> -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-        <mat-form-field class="example-full-width">
-            <mat-label>Nombre de la institución</mat-label>
-            <input matInput formControlName="nombre" id="nombreInstitucion" placeholder="Nombre de la institución">
-            <mat-error *ngIf="'required'">El nombre es obligatorio</mat-error>
-        </mat-form-field>
-
-        <br>
-
-        <mat-form-field>
-            <mat-label>Tipo de institución</mat-label>
-            <mat-select formControlName="tipoLocacion" id="tipoLocacion">
-                <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
-                    {{categoria.nombre}}
-                </mat-option>
-            </mat-select>
-            <mat-error *ngIf="'required'">Debe seleccionar un tipo de locación</mat-error>
-        </mat-form-field>
-
-        <br>
-
-        <mat-form-field class="example-full-width">
-            <mat-label>Dirección</mat-label>
-            <input formControlName="direccion" id="direccion" matInput placeholder="Dirección">
-            <mat-error *ngIf="'required'">Direccion es obligatoria</mat-error>
-        </mat-form-field>
-
-        <br>
-
-        <mat-form-field class="example-full-width">
-            <mat-label>Ciudad</mat-label>
-            <input matInput formControlName="ciudad" id="ciudad" placeholder="Ciudad">
-            <mat-error *ngIf="'required'">Este campo es obligatorio</mat-error>
-        </mat-form-field>
-
-        <br>
-
-        <mat-form-field>
-            <mat-label>Provincia</mat-label>
-            <mat-select formControlName="provincia" id="provincia">
-                <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
-                    {{provincia.nombre}}
-                </mat-option>
-            </mat-select>
-            <mat-error *ngIf="'required'">Debe seleccionar una provincia</mat-error>
-        </mat-form-field>
-
-        <br>
-
-        <button mat-flat-button color="warn" (click)="reset()" [disabled]="form.pristine || form.untouched"
-            type="button">Restaurar
-            formulario</button>
-        <button mat-flat-button color="primary" type="submit"
-            [disabled]="!form.valid || form.pristine || form.untouched" autofocus>Guardar</button>
-
+        <div fxLayout="column" fxLayoutAlign="center stretch">
+            <div fxFlex="20">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Nombre de la institución</mat-label>
+                    <input matInput formControlName="nombre" id="nombreInstitucion"
+                        placeholder="Nombre de la institución">
+                    <mat-error *ngIf="'required'">El nombre es obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Tipo de institución</mat-label>
+                    <mat-select formControlName="tipoLocacion" id="tipoLocacion">
+                        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                            {{categoria.nombre}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="'required'">Debe seleccionar un tipo de locación</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Dirección</mat-label>
+                    <input formControlName="direccion" id="direccion" matInput placeholder="Dirección">
+                    <mat-error *ngIf="'required'">Direccion es obligatoria</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Ciudad</mat-label>
+                    <input matInput formControlName="ciudad" id="ciudad" placeholder="Ciudad">
+                    <mat-error *ngIf="'required'">Este campo es obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Provincia</mat-label>
+                    <mat-select formControlName="provincia" id="provincia">
+                        <mat-option *ngFor="let provincia of provincias" [value]="provincia.id">
+                            {{provincia.nombre}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="'required'">Debe seleccionar una provincia</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20" class="form-buttons">
+                <button mat-flat-button color="warn" (click)="reset()" [disabled]="form.pristine || form.untouched"
+                    type="button" class="button">Restaurar
+                    formulario</button>
+                <button mat-flat-button color="primary" type="submit" class="button"
+                    [disabled]="!form.valid || form.pristine || form.untouched" autofocus>Guardar</button>
+            </div>
+        </div>
     </form>
 
     <h3>Instrucciónes:</h3>

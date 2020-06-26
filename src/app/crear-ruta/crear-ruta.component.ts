@@ -38,7 +38,7 @@ export class CrearRutaComponent implements OnInit {
       esPublica: [0],
       locacion: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
-      usuario: ['lamponne@gmail.com'],
+      usuario: ['emiravenna@gmail.com'],
       fechaCreacion: ['2020-05-06'],
       descripcion: [''],
       estado: [1],

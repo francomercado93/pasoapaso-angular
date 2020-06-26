@@ -1,20 +1,26 @@
-<br>
-<h1 style="margin-left:10px;">Administrar Locaciones</h1>
-
-  <button mat-flat-button color="accent" style="margin-left:110px;" (click)="navigateCrearLocacion()">Crear Locacion</button>
-
-<mat-card *ngFor="let locacion of locaciones" style="margin-top:10px;">
-    <mat-card-header>
-      <mat-card-title>{{locacion.nombre}}</mat-card-title>
-      <mat-card-subtitle>{{locacion.tipoLocacion}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p style="margin-left:15px;">
-        {{locacion.provincia}} - {{locacion.ciudad}}
-      </p>
-    </mat-card-content>
-    <mat-card-actions style="margin-left:15px;">
-        <button mat-flat-button color="warn">Editar</button>
-        <button mat-flat-button color="primary">Publicar</button>
-    </mat-card-actions>
-  </mat-card>
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">Administrar Locaciones</span>
+</mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div fxFlex="20">
+    <button mat-flat-button color="accent" (click)="navigateCrearLocacion()" class="crear-button">Crear
+      Locacion</button>
+  </div>
+  <div fxFlex="40" class="row" *ngFor="let locacion of locaciones">
+    <mat-card>
+      <mat-card-header class="card-center">
+        <mat-card-title class="title-card">{{locacion.nombre}}</mat-card-title>
+        <mat-card-subtitle class="title-card">{{locacion.tipoLocacion}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="card-center">
+        <p>
+          {{locacion.provincia}} - {{locacion.ciudad}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions class="card-button">
+        <button mat-flat-button color="warn" class="button">Editar</button>
+        <button mat-flat-button color="primary" class="button">Publicar</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

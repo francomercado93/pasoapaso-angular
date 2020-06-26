@@ -18,17 +18,16 @@ export class AdministrarLocacionesComponent implements OnInit {
 
 
   async ngOnInit() {
-    try{
+    try {
       this.usuarioLog.usuario = 'emiravenna@gmail.com'
       this.locaciones = await this.locacionService.getLocacionesUsuario(this.usuarioLog.usuario)
       console.log(this.locaciones)
-    }catch(e){
+    } catch (e) {
       console.log(e)
     }
   }
 
-  navigateCrearLocacion(){
+  navigateCrearLocacion() {
     this.route.navigate(['/crear-locacion'])
   }
-
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RutaService } from 'src/app/services/ruta.service';
 import { Instruccion } from 'src/app/domain/instruccion';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -14,10 +14,10 @@ export class RutavidenteComponent implements OnInit {
   iniciarRuta = false;
   instrucciones: Instruccion[]
 
-  constructor(private route: ActivatedRoute, private rutaService: RutaService, private _snackBar: MatSnackBar) { }
+  constructor(private activatedRoute: ActivatedRoute, private route: Router, private rutaService: RutaService, private _snackBar: MatSnackBar) { }
 
   async ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = +this.activatedRoute.snapshot.paramMap.get('id');
     this.instrucciones = await this.rutaService.getInstruccionesRuta(id);
     this.instrucciones = this.instrucciones.sort(inst => inst.numeroInstruccion)
     this.descripcionInstruccion();
@@ -25,6 +25,10 @@ export class RutavidenteComponent implements OnInit {
 
   openSnackBar(message: string, accion: string) {
     this._snackBar.open(message, accion, { duration: 2000, panelClass: ['mat-toolbar', 'mat-primary'] });
+  }
+
+  navigateToBuscarRuta(){
+    this.route.navigate(['/'])
   }
 
   descripcionInstruccion() {

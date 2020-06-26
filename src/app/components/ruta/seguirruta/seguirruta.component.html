@@ -9,18 +9,24 @@
                 class="boton">{{textButton}}</button>
         </mat-grid-tile>
         <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightgreen'">
-            <button mat-button class="boton" [disabled]="deshabilitado">ME PERDI</button>
+            <button mat-button class="boton" [disabled]="deshabilitado">Me perdí</button>
         </mat-grid-tile>
         <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightpink'">
-            <button mat-button class="boton" [disabled]="deshabilitado">ABANDONAR RUTA</button>
+            <button mat-button class="boton" [disabled]="deshabilitado" routerLink="/app-busquedanv">Abandonar
+                ruta</button>
         </mat-grid-tile>
     </mat-grid-list>
-    <mat-grid-list cols="1" rowHeight="1.5:1" *ngIf="opcionNoValida">
-        <mat-grid-tile cols="1" rowHeight="1.5:1" [style.background]="'lightblue'">
-            <button mat-button class="boton">AGREGAR FAVORITOS</button>
+    <mat-grid-list cols="1" rowHeight="2:1" *ngIf="opcionNoValida">
+        <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightblue'">
+            <button mat-button class="boton" [disabled]="deshabilitado">Agregar a favoritos</button>
         </mat-grid-tile>
-        <mat-grid-tile cols="1" rowHeight="1.5:1" [style.background]="'lightgreen'">
-            <button mat-button routerLink="/app-busquedanv" class="boton">BUSCAR NUEVA RUTA</button>
+        <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightgreen'">
+            <button mat-button routerLink="/app-busquedanv" class="boton" [disabled]="deshabilitado">Buscar nueva
+                ruta</button>
+        </mat-grid-tile>
+        <mat-grid-tile cols="1" rowHeight="2:1" [style.background]="'lightpink'">
+            <button mat-button routerLink="/app-busquedanv" class="boton" [disabled]="deshabilitado">Invertir ruta
+            </button>
         </mat-grid-tile>
     </mat-grid-list>
 </div>
