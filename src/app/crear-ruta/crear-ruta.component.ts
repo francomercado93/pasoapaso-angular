@@ -6,6 +6,7 @@ import { LocacionService } from '../services/locacion.service';
 import { RutaService } from '../services/ruta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Usuario } from '../domain/usuario';
 
 @Component({
   selector: 'app-crear-ruta',
@@ -18,14 +19,16 @@ export class CrearRutaComponent implements OnInit {
   locaciones: Locacion[] = new Array
   rutaForm: FormGroup
   instrucciones: FormArray
+  usuarioLog: Usuario = new Usuario()
 
   constructor(private fb: FormBuilder, private rutaService: RutaService, private locacionService: LocacionService, private snackBar: MatSnackBar, private route: Router) { }
 
   async ngOnInit() {
     try {
+      this.usuarioLog.usuario = 'emiravenna@gmail.com'
       this.setValidators()
       this.tiposInstrucciones = await this.rutaService.getTiposInstrucciones()
-      this.locaciones = await this.locacionService.getLocaciones()
+      this.locaciones = await this.locacionService.getLocacionesUsuario(this.usuarioLog.usuario)
       console.log(this.locaciones)
     } catch (e) {
       console.log(e)
@@ -90,7 +93,7 @@ export class CrearRutaComponent implements OnInit {
     })
   }
 
-  eliminarInstruccion(i: number){
+  eliminarInstruccion(i: number) {
     this.instrucciones.removeAt(i)
   }
 }
