@@ -46,17 +46,12 @@ export class LocacionComponent {
 
   setValidatorsUpdate() {
     if (this.locacion != null) {
-      this.form = this.fb.group({
-        id: [this.locacion[0].id],
-        nombre: [this.locacion[0].nombre_locacion, [Validators.required]],
-        direccion: [this.locacion[0].direccion, [Validators.required]],
-        ciudad: [this.locacion[0].ciudad, [Validators.required]],
-        provincia: [this.provincias.find(x => x.nombre == this.locacion[0].provincia).id, [Validators.required]],
-        tipoLocacion: [this.categorias.find(x => x.nombre == this.locacion[0].tipo_locacion).id, [Validators.required]],
-        esPublica: false,
-        usuario: ['emiravenna@gmail.com']
-      });
+      this.form.setValue(this.locacion)
     }
+  }
+
+  get titulo() {
+    return (this.id == null || this.id == 0 ) ? "Crear locación" : "Editar locación" 
   }
 
   setValidators() {
@@ -88,9 +83,18 @@ export class LocacionComponent {
     }
   }
 
-  reset() {
-    this.form.reset()
-    this.setValidators()
+  async reset() {
+    if (this.id != null && this.id != 0) {
+      this.locacion = await this.locacionService.getLocacion(this.id)
+      console.log(this.locacion)
+      this.form.setValue(this.locacion)
+      console.log(this.form)
+      this.form.markAllAsTouched()
+    }
+    else {
+      this.form.reset()
+      this.setValidators()
+    }
   }
 
   openSnackBar() {

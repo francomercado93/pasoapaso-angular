@@ -49,6 +49,7 @@ export class SeguirrutaComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     console.log("Destroy")
     this.speech.cancel()
+    this.speech = null
   }
 
   async ngOnInit() {
@@ -76,43 +77,45 @@ export class SeguirrutaComponent implements OnInit, OnDestroy {
   }
 
   leerInstruccion(instruccion: string) {
-    if (instruccion.length > 30) {
-      this.speech.setRate(1.2)
-    }
-    else {
-      this.speech.setRate(1)
-    }
-    this.speech
-      .speak({
-        text: instruccion,
-        queue: true,
-        listeners: {
-          onstart: () => {
-            console.log("Instrucción: " + instruccion);
-          },
-          onend: () => {
-            console.log("Termino")
+    if (this.speech != null) {
+      if (instruccion.length > 30) {
+        this.speech.setRate(1.2)
+      }
+      else {
+        this.speech.setRate(1)
+      }
+      this.speech
+        .speak({
+          text: instruccion,
+          queue: true,
+          listeners: {
+            onstart: () => {
+              console.log("Instrucción: " + instruccion);
+            },
+            onend: () => {
+              console.log("Termino")
 
-          },
-          onresume: () => {
-            console.log("Resumen")
-          },
-          onboundary: event => {
-            console.log(
-              event.name +
-              " se llego a un limite en " +
-              event.elapsedTime +
-              " milisegundos."
-            );
+            },
+            onresume: () => {
+              console.log("Resumen")
+            },
+            onboundary: event => {
+              console.log(
+                event.name +
+                " se llego a un limite en " +
+                event.elapsedTime +
+                " milisegundos."
+              );
+            }
           }
-        }
-      })
-      .then(() => {
-        console.log("Funcionó")
-      })
-      .catch(e => {
-        console.error("Ocurrio un error: ", e);
-      });
+        })
+        .then(() => {
+          console.log("Funcionó")
+        })
+        .catch(e => {
+          console.error("Ocurrio un error: ", e);
+        });
+    }
   }
 
   async siguienteOpcion() {

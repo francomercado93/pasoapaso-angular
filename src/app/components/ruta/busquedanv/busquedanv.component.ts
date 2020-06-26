@@ -31,6 +31,7 @@ export class BusquedaNvComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log("Destroy")
     this.speech.cancel()
+    this.speech = null
   }
 
   async ngOnInit() {
@@ -156,6 +157,7 @@ export class BusquedaNvComponent implements OnInit, OnDestroy {
         this.i = 0
         console.log("Redireccion a Seguir ruta")
         let id = this.rutaSeleccionada.id
+        await delay(3000)
         this.route.navigate(['/ruta', id]);
         break
     }
@@ -187,43 +189,45 @@ export class BusquedaNvComponent implements OnInit, OnDestroy {
   }
 
   leerInstruccion(instruccion: string) {
-    this.texto = instruccion
-    if (instruccion.length > 30) {
-      this.speech.setRate(1.1)
-    }
-    else {
-      this.speech.setRate(1)
-    }
-    this.speech
-      .speak({
-        text: instruccion,
-        queue: true,
-        listeners: {
-          onstart: () => {
-            console.log("Instruccion: " + instruccion);
-          },
-          onend: () => {
-            console.log("Termino")
-          },
-          onresume: () => {
-            console.log("Resumen")
-          },
-          onboundary: event => {
-            console.log(
-              event.name +
-              " se llego a un limite en " +
-              event.elapsedTime +
-              " milisegundos."
-            );
+    if (this.speech != null) {
+      this.texto = instruccion
+      if (instruccion.length > 30) {
+        this.speech.setRate(1.1)
+      }
+      else {
+        this.speech.setRate(1)
+      }
+      this.speech
+        .speak({
+          text: instruccion,
+          queue: true,
+          listeners: {
+            onstart: () => {
+              console.log("Instruccion: " + instruccion);
+            },
+            onend: () => {
+              console.log("Termino")
+            },
+            onresume: () => {
+              console.log("Resumen")
+            },
+            onboundary: event => {
+              console.log(
+                event.name +
+                " se llego a un limite en " +
+                event.elapsedTime +
+                " milisegundos."
+              );
+            }
           }
-        }
-      })
-      .then(() => {
-        console.log("Funcionó! ");
-      })
-      .catch(e => {
-        console.error("Ocurrio un error: ", e);
-      });
+        })
+        .then(() => {
+          console.log("Funcionó! ");
+        })
+        .catch(e => {
+          console.error("Ocurrio un error: ", e);
+        });
+    }
   }
 }
 
