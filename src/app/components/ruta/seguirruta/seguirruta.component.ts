@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import Speech from 'speak-tts';
@@ -12,16 +12,20 @@ import { Ruta } from 'src/app/domain/ruta';
   styleUrls: ['./seguirruta.component.css']
 })
 
-export class SeguirrutaComponent implements OnInit {
+export class SeguirrutaComponent implements OnInit, OnDestroy {
 
   speech: Speech = new Speech()
   i: number = 0
   ruta: Ruta
   instrucciones: Instruccion[]
   inicio: Boolean = true
-  deshabilitado: Boolean
 
   constructor(private route: ActivatedRoute, private rutaService: RutaService) { }
+
+  ngOnDestroy() {
+    console.log("Destroy")
+    this.speech.cancel()
+  }
 
   async ngOnInit() {
     try {
@@ -52,29 +56,23 @@ export class SeguirrutaComponent implements OnInit {
   }
 
   inicializarVoz() {
-    try {
-      this.speech
-        .init({
-          volume: 0.5,
-          lang: "es-ES",
-          rate: 1,
-          'voice': 'Google español',
-          'splitSentences': false
-        })
-        .then(data => {
-          console.log(data)
-        })
-        .catch(e => {
-          console.error("El siguiente error se produjo al inicializarse: ", e);
-        });
-    } catch (e) {
-      console.log(e)
-    }
+    this.speech
+      .init({
+        volume: 0.5,
+        lang: "es-ES",
+        rate: 1,
+        'voice': 'Google español',
+        'splitSentences': false
+      })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(e => {
+        console.error("El siguiente error se produjo al inicializarse: ", e);
+      });
   }
 
   leerInstruccion(instruccion: string) {
-    this.deshabilitado = true
-    console.log(this.deshabilitado)
     if (instruccion.length > 30) {
       this.speech.setRate(1.2)
     }
@@ -108,7 +106,6 @@ export class SeguirrutaComponent implements OnInit {
       })
       .then(() => {
         console.log("Funcionó")
-        this.deshabilitado = false
       })
       .catch(e => {
         console.error("Ocurrio un error: ", e);
@@ -153,4 +150,9 @@ export class SeguirrutaComponent implements OnInit {
   get opcionNoValida(): Boolean {
     return this.instrucciones == null ? false : this.i >= this.instrucciones.length
   }
+
+  get deshabilitado(): Boolean {
+    return this.speech.speaking()
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import Speech from "speak-tts";
 import { Categoria } from 'src/app/domain/categoria';
@@ -12,7 +12,7 @@ import { RutaService } from 'src/app/services/ruta.service';
   templateUrl: './busquedanv.component.html',
   styleUrls: ['./busquedanv.component.css']
 })
-export class BusquedaNvComponent implements OnInit {
+export class BusquedaNvComponent implements OnInit, OnDestroy {
 
   speech: Speech
   i: number = 0
@@ -25,8 +25,13 @@ export class BusquedaNvComponent implements OnInit {
   locaciones: Locacion[] = new Array
   rutas: Ruta[] = new Array
   texto: string = ""
-  deshabilitado: Boolean
+
   constructor(private locacionService: LocacionService, private rutaService: RutaService, private route: Router) { }
+
+  ngOnDestroy(): void {
+    console.log("Destroy")
+    this.speech.cancel()
+  }
 
   async ngOnInit() {
     try {
@@ -160,6 +165,10 @@ export class BusquedaNvComponent implements OnInit {
     return this.i < 0
   }
 
+  get deshabilitado(): Boolean {
+    return this.speech.speaking()
+  }
+
   inicializarVoz() {
     this.speech
       .init({
@@ -171,7 +180,6 @@ export class BusquedaNvComponent implements OnInit {
       })
       .then(data => {
         console.log(data)
-        this.deshabilitado = false
       })
       .catch(e => {
         console.error("El siguiente error se produjo al inicializarse: ", e);
@@ -179,8 +187,6 @@ export class BusquedaNvComponent implements OnInit {
   }
 
   leerInstruccion(instruccion: string) {
-    this.deshabilitado = true
-    console.log(this.deshabilitado)
     this.texto = instruccion
     if (instruccion.length > 30) {
       this.speech.setRate(1.1)
@@ -214,7 +220,6 @@ export class BusquedaNvComponent implements OnInit {
       })
       .then(() => {
         console.log("Funcionó! ");
-        this.deshabilitado = false
       })
       .catch(e => {
         console.error("Ocurrio un error: ", e);
