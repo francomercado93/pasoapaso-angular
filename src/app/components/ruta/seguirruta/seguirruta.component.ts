@@ -14,13 +14,37 @@ import { Ruta } from 'src/app/domain/ruta';
 
 export class SeguirrutaComponent implements OnInit, OnDestroy {
 
-  speech: Speech = new Speech()
+  speech: Speech
   i: number = 0
   ruta: Ruta
   instrucciones: Instruccion[]
   inicio: Boolean = true
 
-  constructor(private route: ActivatedRoute, private rutaService: RutaService) { }
+  constructor(private route: ActivatedRoute, private rutaService: RutaService) {
+    this.speech = new Speech()
+
+    this.speech
+      .init({
+        'default': true,
+        'volume': 0.5,
+        'lang': 'es-ES',
+        'rate': 1,
+        'voice': 'Google español',
+        'splitSentences': false
+      })
+      .then(data => {
+        console.log("Speech is ready, voices are available", data)
+        this.leerInstruccion("Pantalla de seguir ruta " + this.ruta.nombre)
+        delay(3000)
+        this.leerInstruccion("La pantalla consta de los siguientes botones: siguiente en la parte superior, me perdí en el medio y abandonar ruta en la parte inferior ")
+        delay(3000)
+        this.leerInstruccion("Toque la parte superior de la pantalla para iniciar la ruta")
+      })
+      .catch(e => {
+        console.error("El siguiente error se produjo al inicializarse: ", e);
+      });
+
+  }
 
   ngOnDestroy() {
     console.log("Destroy")
@@ -29,14 +53,10 @@ export class SeguirrutaComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
-      this.speech = new Speech()
       const id = +this.route.snapshot.paramMap.get('id');
       this.ruta = await this.rutaService.getRutaById(id)
       this.instrucciones = await this.rutaService.getInstruccionesRuta(id)
       this.instrucciones = this.instrucciones.sort(inst => inst.numeroInstruccion)
-      await delay(1000)
-      this.inicializarVoz()
-      this.leerInstruccionesPrincipales()
     } catch (e) {
       console.log(e)
     }
@@ -53,23 +73,6 @@ export class SeguirrutaComponent implements OnInit, OnDestroy {
 
   get textButton(): String {
     return this.inicio ? "INICIAR RUTA" : "SIGUIENTE"
-  }
-
-  inicializarVoz() {
-    this.speech
-      .init({
-        volume: 0.5,
-        lang: "es-ES",
-        rate: 1,
-        'voice': 'Google español',
-        'splitSentences': false
-      })
-      .then(data => {
-        console.log(data)
-      })
-      .catch(e => {
-        console.error("El siguiente error se produjo al inicializarse: ", e);
-      });
   }
 
   leerInstruccion(instruccion: string) {
