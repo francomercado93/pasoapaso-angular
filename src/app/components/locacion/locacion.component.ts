@@ -5,7 +5,7 @@ import { Locacion } from 'src/app/domain/locacion';
 import { Categoria } from 'src/app/domain/categoria';
 import { Provincia } from 'src/app/domain/provincia';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-locacion',
@@ -19,8 +19,11 @@ export class LocacionComponent {
   provincias: Provincia[] = new Array
   form: FormGroup
   contador: number = 10
+  locacion: Locacion;
+  id: number
 
-  constructor(private locacionService: LocacionService, private fb: FormBuilder, private snackBar: MatSnackBar, private route: Router) { }
+  constructor(private locacionService: LocacionService, private fb: FormBuilder, private snackBar: MatSnackBar, private route: Router, private activatedRoute: ActivatedRoute) {
+  }
 
   async ngOnInit() {
     try {
@@ -30,8 +33,29 @@ export class LocacionComponent {
       console.log(this.categorias)
       this.provincias = await this.locacionService.getProvincias()
       console.log(this.provincias)
+
+      this.id = +this.activatedRoute.snapshot.paramMap.get('id');
+      if (this.id != null && this.id != 0) {
+        this.locacion = await this.locacionService.getLocacion(this.id);
+        this.setValidatorsUpdate();
+      }
     } catch (e) {
       console.log(e)
+    }
+  }
+
+  setValidatorsUpdate() {
+    if (this.locacion != null) {
+      this.form = this.fb.group({
+        id: [this.locacion[0].id],
+        nombre: [this.locacion[0].nombre_locacion, [Validators.required]],
+        direccion: [this.locacion[0].direccion, [Validators.required]],
+        ciudad: [this.locacion[0].ciudad, [Validators.required]],
+        provincia: [this.provincias.find(x => x.nombre == this.locacion[0].provincia).id, [Validators.required]],
+        tipoLocacion: [this.categorias.find(x => x.nombre == this.locacion[0].tipo_locacion).id, [Validators.required]],
+        esPublica: false,
+        usuario: ['emiravenna@gmail.com']
+      });
     }
   }
 
@@ -50,8 +74,14 @@ export class LocacionComponent {
 
   async onSubmit() {
     try {
-      // this.contador++
-      await this.locacionService.crearLocacion(this.form.value)
+      if (this.id != null && this.id != 0) {
+        this.form.value.id = this.id;
+        await this.locacionService.actualizarLocacion(this.form.value)
+        this.actualizarSnackBar();
+      } else {
+        await this.locacionService.crearLocacion(this.form.value)
+        this.openSnackBar()
+      }
       this.route.navigate(['/administrar-locaciones'])
     } catch (e) {
       console.log(e)
@@ -65,7 +95,11 @@ export class LocacionComponent {
 
   openSnackBar() {
     this.snackBar.open('Nueva locacion creada!', "Ok", {
-      duration: 3000,
+      duration: 2000,
     })
+  }
+
+  actualizarSnackBar() {
+    this.snackBar.open('Locacion actualizada!', "Ok", { duration: 2000, panelClass: ['mat-toolbar', 'mat-primary'] })
   }
 }

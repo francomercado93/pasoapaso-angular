@@ -30,4 +30,10 @@ export class AdministrarLocacionesComponent implements OnInit {
   navigateCrearLocacion() {
     this.route.navigate(['/crear-locacion'])
   }
+
+  navigateEditarLocacion(id: number) {
+    console.log(id);
+    console.log("holaaa")
+    this.route.navigate(['/editar-locacion', id])
+  }
 }

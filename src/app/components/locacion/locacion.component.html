@@ -57,7 +57,11 @@
                     type="button" class="button">Restaurar
                     formulario</button>
                 <button mat-flat-button color="primary" type="submit" class="button"
-                    [disabled]="!form.valid || form.pristine || form.untouched" autofocus>Guardar</button>
+                    [disabled]="!form.valid || form.pristine || form.untouched" autofocus *ngIf="!id else modificar">Guardar</button>
+                <ng-template #modificar>
+                <button mat-flat-button color="primary" type="submit" class="button"
+                    [disabled]="!form.valid || form.pristine" autofocus>Modificar</button>
+                </ng-template>
             </div>
         </div>
     </form>

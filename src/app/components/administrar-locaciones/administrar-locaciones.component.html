@@ -6,7 +6,7 @@
     <button mat-flat-button color="accent" (click)="navigateCrearLocacion()" class="crear-button">Crear
       Locacion</button>
   </div>
-  <div fxFlex="40" class="row" *ngFor="let locacion of locaciones">
+  <div fxFlex="40" class="row" *ngFor="let locacion of locaciones" [attr.id]="locacion.id">
     <mat-card>
       <mat-card-header class="card-center">
         <mat-card-title class="title-card">{{locacion.nombre}}</mat-card-title>
@@ -18,7 +18,7 @@
         </p>
       </mat-card-content>
       <mat-card-actions class="card-button">
-        <button mat-flat-button color="warn" class="button">Editar</button>
+        <button mat-flat-button color="warn" class="button" (click)="navigateEditarLocacion(locacion.id)">Editar</button>
         <button mat-flat-button color="primary" class="button">Publicar</button>
       </mat-card-actions>
     </mat-card>

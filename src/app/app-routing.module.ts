@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'app-busquedanv', component: BusquedaNvComponent },
   { path: 'administrar-locaciones', component: AdministrarLocacionesComponent },
   { path: 'crear-locacion', component: LocacionComponent },
+  { path: 'editar-locacion/:id', component: LocacionComponent },
   { path: 'administrar-ruta', component: AdministrarRutasComponent },
   { path: 'app-notificacion', component: NotificacionComponent },
   { path: 'ruta/:id', component: SeguirrutaComponent },

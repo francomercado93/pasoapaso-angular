@@ -28,6 +28,11 @@ export class LocacionService implements ILocacionService {
     return res
   }
 
+  async actualizarLocacion(locacion: Locacion): Promise<any> {
+    const res = this.httpClient.post(`${baseUrl}/actualizarlocacion`, locacion).toPromise()
+    return res
+  }
+
   async getLocacionesCategoria(idCategoria: number): Promise<any> {
     const res = await this.httpClient.get<Array<Locacion>>(`${baseUrl}/locaciones-tipo/${idCategoria}`).toPromise()
     return res
@@ -40,6 +45,12 @@ export class LocacionService implements ILocacionService {
 
   async getLocaciones(): Promise<Array<Locacion>> {
     const res = await this.httpClient.get<Array<Locacion>>(`${baseUrl}/locaciones`).toPromise()
+    return res
+  }
+
+  async getLocacion(idLocacion: number): Promise<Locacion> {
+    console.log("el super id es: " + idLocacion)
+    const res = await this.httpClient.get<Locacion>(`${baseUrl}/locacion/${idLocacion}`).toPromise()
     return res
   }
 
