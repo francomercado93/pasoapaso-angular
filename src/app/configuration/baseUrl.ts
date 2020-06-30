@@ -1,5 +1,5 @@
 // =======================Configuracion actual============================
-export const baseUrl = 'http://localhost:3000'
+export const baseUrl = 'http://cef208a50108.ngrok.io'
 
 // =======================Configuracion local============================
 // export const baseUrl = 'http://localhost:3000'
